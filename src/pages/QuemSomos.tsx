@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Target, Eye, Heart, Users, Award, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -182,7 +182,7 @@ export default function QuemSomos() {
               Junte-se a centenas de empresas que confiam em nosso trabalho 
               para representar seus interesses e impulsionar o crescimento do setor.
             </p>
-            <Link href="/contato" className="btn-primary">
+            <Link to="/contato" className="btn-primary">
               Associe-se Agora
             </Link>
           </div>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Target, Eye, Heart, Users, Building, Globe, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import HeroSlider from '@/components/HeroSlider';
@@ -33,7 +33,7 @@ const Index = () => {
                 oferecendo serviços especializados, capacitação profissional e representação 
                 institucional junto aos órgãos competentes.
               </p>
-              <Link href="/quem-somos" className="btn-primary group">
+              <Link to="/quem-somos" className="btn-primary group">
                 Conheça Nossa História
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -92,7 +92,7 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/servicos" className="btn-outline">
+            <Link to="/servicos" className="btn-outline">
               Ver Todos os Serviços
             </Link>
           </div>
@@ -127,7 +127,7 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link href="/parcerias" className="btn-outline">
+            <Link to="/parcerias" className="btn-outline">
               Conheça Todas as Parcerias
             </Link>
           </div>
@@ -145,7 +145,7 @@ const Index = () => {
               </p>
             </div>
             <Link 
-              href="/noticias" 
+              to="/noticias" 
               className="mt-4 md:mt-0 btn-outline"
             >
               Ver Todas as Notícias
@@ -199,10 +199,10 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contato" className="btn-secondary">
+              <Link to="/contato" className="btn-secondary">
                 Torne-se Associado
               </Link>
-              <Link href="/quem-somos" className="btn-secondary">
+              <Link to="/quem-somos" className="btn-secondary">
                 Saiba Mais
               </Link>
             </div>

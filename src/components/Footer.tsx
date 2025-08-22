@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import logoImage from '@/assets/logo.jpg';
 
@@ -82,7 +82,7 @@ export default function Footer() {
               {navigation.institucional.map((item) => (
                 <li key={item.name}>
                   <Link 
-                    href={item.href}
+                    to={item.href}
                     className="text-gray-300 hover:text-accent-400 transition-colors duration-300 link-hover"
                   >
                     {item.name}
@@ -98,7 +98,7 @@ export default function Footer() {
               {navigation.servicos.map((item) => (
                 <li key={item.name}>
                   <Link 
-                    href={item.href}
+                    to={item.href}
                     className="text-gray-300 hover:text-accent-400 transition-colors duration-300 link-hover"
                   >
                     {item.name}
@@ -133,13 +133,13 @@ export default function Footer() {
                 © 2024 Sindicato Industrial. Todos os direitos reservados.
               </p>
               <div className="flex flex-wrap justify-center md:justify-end space-x-4 mt-2 text-xs text-gray-500">
-                <Link href="/privacidade" className="hover:text-accent-400 transition-colors duration-300">
+                <Link to="/privacidade" className="hover:text-accent-400 transition-colors duration-300">
                   Política de Privacidade
                 </Link>
-                <Link href="/termos" className="hover:text-accent-400 transition-colors duration-300">
+                <Link to="/termos" className="hover:text-accent-400 transition-colors duration-300">
                   Termos de Uso
                 </Link>
-                <Link href="/cookies" className="hover:text-accent-400 transition-colors duration-300">
+                <Link to="/cookies" className="hover:text-accent-400 transition-colors duration-300">
                   Cookies
                 </Link>
               </div>

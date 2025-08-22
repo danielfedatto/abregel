@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import logoImage from '@/assets/logo.jpg';
@@ -38,7 +38,7 @@ export default function Header() {
       <nav className="container-section">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <img
               src={logoImage}
               alt="Sindicato Logo"
@@ -58,7 +58,7 @@ export default function Header() {
             {navigation.map((item) => (
               <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className={`font-medium transition-all duration-300 link-hover ${
                   isScrolled
                     ? 'text-primary-900 hover:text-primary-700'
@@ -73,7 +73,7 @@ export default function Header() {
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center">
             <Link
-              href="/contato"
+              to="/contato"
               className={`font-semibold px-6 py-2 rounded-xl transition-all duration-300 ${
                 isScrolled
                   ? 'btn-primary'
@@ -102,7 +102,7 @@ export default function Header() {
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href}
                       onClick={() => setIsOpen(false)}
                       className="text-lg font-medium text-primary-900 hover:text-primary-700 transition-colors duration-300"
                     >
@@ -111,7 +111,7 @@ export default function Header() {
                   ))}
                   <div className="pt-4 border-t border-border">
                     <Link
-                      href="/contato"
+                      to="/contato"
                       onClick={() => setIsOpen(false)}
                       className="btn-primary block text-center"
                     >

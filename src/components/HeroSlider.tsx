@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 // Import Swiper styles
@@ -98,11 +98,11 @@ export default function HeroSlider() {
                     </p>
                     {slide.cta && (
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <Link href={slide.cta.href} className="btn-primary group">
+                        <Link to={slide.cta.href} className="btn-primary group">
                           {slide.cta.text}
                           <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                         </Link>
-                        <Link href="/contato" className="btn-secondary">
+                        <Link to="/contato" className="btn-secondary">
                           Fale Conosco
                         </Link>
                       </div>

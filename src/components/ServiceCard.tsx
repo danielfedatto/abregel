@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { ChevronRight, Shield, GraduationCap, Lightbulb, Users, Calendar, Megaphone } from 'lucide-react';
 import { Service } from '@/data/services';
 
@@ -33,7 +33,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
       </p>
       
       <Link 
-        href={service.href}
+        to={service.href}
         className="inline-flex items-center text-primary font-medium link-hover group-hover:text-primary-700 transition-colors duration-300"
       >
         Saiba mais
