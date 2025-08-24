@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-import logoImage from '@/assets/logo.jpg';
+// Using public assets in Next.js
 
 const navigation = {
   institucional: [
@@ -39,7 +39,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <img
-                src={logoImage}
+                src="/assets/logo.jpg"
                 alt="Sindicato Logo"
                 className="h-12 w-12 rounded-full object-cover"
               />
@@ -82,7 +82,7 @@ export default function Footer() {
               {navigation.institucional.map((item) => (
                 <li key={item.name}>
                   <Link 
-                    to={item.href}
+                    href={item.href}
                     className="text-gray-300 hover:text-accent-400 transition-colors duration-300 link-hover"
                   >
                     {item.name}
@@ -98,7 +98,7 @@ export default function Footer() {
               {navigation.servicos.map((item) => (
                 <li key={item.name}>
                   <Link 
-                    to={item.href}
+                    href={item.href}
                     className="text-gray-300 hover:text-accent-400 transition-colors duration-300 link-hover"
                   >
                     {item.name}
@@ -133,13 +133,13 @@ export default function Footer() {
                 © 2024 Sindicato Industrial. Todos os direitos reservados.
               </p>
               <div className="flex flex-wrap justify-center md:justify-end space-x-4 mt-2 text-xs text-gray-500">
-                <Link to="/privacidade" className="hover:text-accent-400 transition-colors duration-300">
+                <Link href="/privacidade" className="hover:text-accent-400 transition-colors duration-300">
                   Política de Privacidade
                 </Link>
-                <Link to="/termos" className="hover:text-accent-400 transition-colors duration-300">
+                <Link href="/termos" className="hover:text-accent-400 transition-colors duration-300">
                   Termos de Uso
                 </Link>
-                <Link to="/cookies" className="hover:text-accent-400 transition-colors duration-300">
+                <Link href="/cookies" className="hover:text-accent-400 transition-colors duration-300">
                   Cookies
                 </Link>
               </div>

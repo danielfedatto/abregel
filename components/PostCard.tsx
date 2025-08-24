@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { Post } from '@/data/posts';
 
@@ -41,7 +41,7 @@ export default function PostCard({ post }: PostCardProps) {
         </p>
         
         <Link 
-          to={`/noticias/${post.slug}`}
+          href={`/noticias/${post.slug}`}
           className="inline-flex items-center text-primary font-medium link-hover group-hover:text-primary-700 transition-colors duration-300"
         >
           Ler mais

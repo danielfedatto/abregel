@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
 // Import Swiper styles
@@ -12,14 +12,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 import { heroSlides } from '@/data/slides';
-import heroImage1 from '@/assets/hero-1.jpg';
-import heroImage2 from '@/assets/hero-2.jpg';
-import heroImage3 from '@/assets/hero-3.jpg';
-
 const slideImages = {
-  '/img/hero-1.jpg': heroImage1,
-  '/img/hero-2.jpg': heroImage2,
-  '/img/hero-3.jpg': heroImage3,
+  '/img/hero-1.jpg': '/assets/hero-1.jpg',
+  '/img/hero-2.jpg': '/assets/hero-2.jpg',
+  '/img/hero-3.jpg': '/assets/hero-3.jpg',
 };
 
 export default function HeroSlider() {
@@ -98,11 +94,11 @@ export default function HeroSlider() {
                     </p>
                     {slide.cta && (
                       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <Link to={slide.cta.href} className="btn-primary group">
+                        <Link href={slide.cta.href} className="btn-primary group">
                           {slide.cta.text}
                           <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                         </Link>
-                        <Link to="/contato" className="btn-secondary">
+                        <Link href="/contato" className="btn-secondary">
                           Fale Conosco
                         </Link>
                       </div>
