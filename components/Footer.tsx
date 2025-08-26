@@ -39,14 +39,10 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <img
-                src="/assets/logo.jpg"
+                src="/assets/logo.svg"
                 alt="Sindicato Logo"
-                className="h-12 w-12 rounded-full object-cover"
+                className="h-10 lg:h-12 w-auto object-contain"
               />
-              <div>
-                <h3 className="text-xl font-bold">Sindicato Industrial</h3>
-                <p className="text-accent-400 text-sm">Fortalecendo o setor desde 1985</p>
-              </div>
             </div>
             
             <p className="text-gray-300 mb-6 leading-relaxed">

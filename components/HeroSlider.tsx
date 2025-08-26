@@ -39,7 +39,7 @@ export default function HeroSlider() {
         effect="fade"
         autoplay={{
           delay: 6000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         pagination={{
           clickable: true,
@@ -78,14 +78,14 @@ export default function HeroSlider() {
             </div>
 
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-hero" />
+            <div className="absolute inset-0 " />
 
             {/* Content */}
             <div className="relative h-full flex items-center justify-center">
               <div className="container-section">
-                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="items-center">
                   {/* Text Content */}
-                  <div className="text-center lg:text-left space-y-6">
+                  {/* <div className="text-center lg:text-left space-y-6">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                       {slide.title}
                     </h1>
@@ -103,12 +103,12 @@ export default function HeroSlider() {
                         </Link>
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Media Content */}
                   <div className="flex justify-center lg:justify-end">
-                    <div className="relative w-full max-w-lg lg:max-w-xl">
-                      <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                    <div className="relative w-full">
+                      <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm">
                         {slide.type === 'image' ? (
                           <img
                             src={slideImages[slide.src as keyof typeof slideImages]}

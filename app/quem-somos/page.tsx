@@ -182,7 +182,7 @@ export default function QuemSomos() {
               Junte-se a centenas de empresas que confiam em nosso trabalho 
               para representar seus interesses e impulsionar o crescimento do setor.
             </p>
-            <Link to="/contato" className="btn-primary">
+            <Link href="/contato" className="btn-primary">
               Associe-se Agora
             </Link>
           </div>

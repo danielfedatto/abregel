@@ -26,7 +26,7 @@ export const heroSlides: HeroSlide[] = [
   {
     id: 'inovacao-tecnologia',
     type: 'video',
-    src: '/videos/hero-tech.mp4',
+    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     poster: '/img/hero-2.jpg',
     title: 'Inovação e Tecnologia',
     subtitle: 'Capacitação contínua e acesso às mais avançadas tecnologias do setor industrial.',

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 // Using public assets in Next.js
 
@@ -29,28 +29,17 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur supports-[backdrop-filter]:bg-white/10 border-b border-white/20`}
     >
       <nav className="container-section">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center">
             <img
-              src="/assets/logo.jpg"
-              alt="Sindicato Logo"
-              className="h-10 w-10 lg:h-12 lg:w-12 rounded-full object-cover"
+              src="/assets/logo.svg"
+              alt="Sindicato Industrial"
+              className="h-8 w-auto lg:h-12 object-contain"
             />
-            <span
-              className={`hidden sm:block font-bold text-lg lg:text-xl transition-colors duration-300 ${
-                isScrolled ? 'text-primary-900' : 'text-white'
-              }`}
-            >
-              Sindicato Industrial
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -70,19 +59,7 @@ export default function Header() {
             ))}
           </div>
 
-          {/* CTA Button - Desktop */}
-          <div className="hidden lg:flex items-center">
-            <Link
-              href="/contato"
-              className={`font-semibold px-6 py-2 rounded-xl transition-all duration-300 ${
-                isScrolled
-                  ? 'btn-primary'
-                  : 'btn-secondary'
-              }`}
-            >
-              Associe-se
-            </Link>
-          </div>
+          
 
           {/* Mobile Menu */}
           <div className="lg:hidden">
@@ -109,15 +86,7 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
-                  <div className="pt-4 border-t border-border">
-                    <Link
-                      href="/contato"
-                      onClick={() => setIsOpen(false)}
-                      className="btn-primary block text-center"
-                    >
-                      Associe-se
-                    </Link>
-                  </div>
+                  
                 </div>
               </SheetContent>
             </Sheet>
