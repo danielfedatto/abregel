@@ -39,9 +39,9 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <img
-                src="/assets/logo.svg"
+                src="/assets/logo_footer.svg"
                 alt="Sindicato Logo"
-                className="h-10 lg:h-12 w-auto object-contain"
+                className="h-12 lg:h-16 w-auto object-contain"
               />
             </div>
             
