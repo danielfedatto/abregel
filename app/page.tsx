@@ -9,6 +9,7 @@ import Footer from '@/components/Footer';
 import { services } from '@/data/services';
 import { posts } from '@/data/posts';
 import { partners } from '@/data/partners';
+import Testimonials from '@/components/Testimonials';
 
 const Index = () => {
   const latestPosts = posts.slice(0, 3);
@@ -98,6 +99,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Depoimentos Section */}
+      <Testimonials />
 
       {/* Parcerias Section */}
       <section className="section-padding">

@@ -43,11 +43,50 @@ export default function HeroSlider() {
         }}
         pagination={{
           clickable: true,
-          el: '.hero-pagination',
-          bulletClass: 'hero-bullet',
-          bulletActiveClass: 'hero-bullet-active',
+          bulletClass: 'swiper-pagination-bullet',
+          bulletActiveClass: 'swiper-pagination-bullet-active',
+          renderBullet: (index, className) => {
+            const slide = index + 1;
+            return `
+              <button class="${className}" type="button" role="tab" aria-controls="heroBanner-slide${slide}" aria-label="Go to slide ${slide}" tabindex="0">
+                <span class="bullet-track"><span class="bullet-progress"></span></span>
+              </button>
+            `;
+          },
         }}
         loop={true}
+        onInit={(swiper) => {
+          const delay = typeof swiper.params.autoplay === 'object' ? (swiper.params.autoplay as any).delay : 6000;
+          const el = swiper.pagination?.el as HTMLElement | null;
+          if (el) {
+            el.style.setProperty('--slide-interval', `${delay}ms`);
+            requestAnimationFrame(() => {
+              const bullets = el.querySelectorAll('.swiper-pagination-bullet');
+              bullets.forEach((b) => b.classList.remove('is-active'));
+              const active = el.querySelector('.swiper-pagination-bullet-active');
+              active?.classList.add('is-active');
+            });
+          }
+        }}
+        onSlideChange={(swiper) => {
+          const el = swiper.pagination?.el as HTMLElement | null;
+          if (!el) return;
+          const bullets = el.querySelectorAll('.swiper-pagination-bullet');
+          bullets.forEach((b) => {
+            b.classList.remove('is-active');
+            const prog = (b as HTMLElement).querySelector('.bullet-progress') as HTMLElement | null;
+            if (prog) {
+              // restart CSS animation
+              prog.style.animation = 'none';
+              // force reflow
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+              prog.offsetHeight;
+              prog.style.animation = '';
+            }
+          });
+          const active = el.querySelector('.swiper-pagination-bullet-active');
+          active?.classList.add('is-active');
+        }}
         className="h-full"
       >
         {heroSlides.map((slide, index) => (
@@ -84,26 +123,6 @@ export default function HeroSlider() {
             <div className="relative h-full flex items-center justify-center">
               <div className="container-section">
                 <div className="items-center">
-                  {/* Text Content */}
-                  {/* <div className="text-center lg:text-left space-y-6">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                      {slide.title}
-                    </h1>
-                    <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0">
-                      {slide.subtitle}
-                    </p>
-                    {slide.cta && (
-                      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <Link href={slide.cta.href} className="btn-primary group">
-                          {slide.cta.text}
-                          <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                        <Link href="/contato" className="btn-secondary">
-                          Fale Conosco
-                        </Link>
-                      </div>
-                    )}
-                  </div> */}
 
                   {/* Media Content */}
                   <div className="flex justify-center lg:justify-end">
@@ -137,8 +156,7 @@ export default function HeroSlider() {
         ))}
       </Swiper>
 
-      {/* Custom Pagination */}
-      <div className="hero-pagination absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-3" />
+      {/* Default Swiper pagination will render inside Swiper */}
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 right-8 z-10 hidden lg:block">
@@ -151,19 +169,15 @@ export default function HeroSlider() {
 
       <style dangerouslySetInnerHTML={{
         __html: `
-          .hero-bullet {
-            width: 12px;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-          }
-          
-          .hero-bullet-active {
-            background: white;
-            transform: scale(1.2);
-          }
+          .swiper-pagination { display: flex; gap: 12px; align-items: center; justify-content: center; }
+          .swiper-pagination-bullets { bottom: 2rem !important; }
+          .swiper-pagination-bullet { position: relative; width: 56px; height: 4px; border-radius: 9999px; background: rgba(255,255,255,0.35); overflow: hidden; cursor: pointer; opacity: 1; padding: 0; }
+          .swiper-pagination-bullet:hover { background: rgba(255,255,255,0.5); }
+          .swiper-pagination-bullet-active { background: rgba(255,255,255,0.35); }
+          .bullet-track { position: absolute; inset: 0; display: block; }
+          .bullet-progress { position: absolute; right: 0; left: auto; top: 0; bottom: 0; width: 8px; background: #ffffff; border-radius: 9999px; }
+          .swiper-pagination-bullet.is-active .bullet-progress { animation: sliding var(--slide-interval, 6000ms) linear forwards; transform-origin: right center; }
+          @keyframes sliding { from { width: 8px; } to { width: 100%; } }
         `
       }} />
     </section>

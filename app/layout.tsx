@@ -4,6 +4,7 @@ import { Montserrat } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
 import Providers from '@/components/Providers';
 import './globals.css';
+import NewsletterModal from '@/components/NewsletterModal'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -68,6 +69,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <NewsletterModal />
         <Analytics />
       </body>
     </html>

@@ -41,7 +41,7 @@ export default function Footer() {
               <img
                 src="/assets/logo_footer.svg"
                 alt="Sindicato Logo"
-                className="h-12 lg:h-16 w-auto object-contain"
+                className="h-32 lg:h-40 w-auto object-contain"
               />
             </div>
             
