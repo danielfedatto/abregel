@@ -10,6 +10,7 @@ import { services } from '@/data/services';
 import { posts } from '@/data/posts';
 import { partners } from '@/data/partners';
 import Testimonials from '@/components/Testimonials';
+import PricingPlans from '@/components/PricingPlans';
 
 const Index = () => {
   const latestPosts = posts.slice(0, 3);
@@ -102,6 +103,9 @@ const Index = () => {
 
       {/* Depoimentos Section */}
       <Testimonials />
+
+      {/* Planos de Associação Section */}
+      <PricingPlans />
 
       {/* Parcerias Section */}
       <section className="section-padding">

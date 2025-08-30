@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import Providers from '@/components/Providers';
 import './globals.css';
 import NewsletterModal from '@/components/NewsletterModal'
+import ScrollToTop from '@/components/ScrollToTop'
+import WhatsAppButton from '@/components/WhatsAppButton'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -70,6 +72,8 @@ export default function RootLayout({
           {children}
         </Providers>
         <NewsletterModal />
+        <WhatsAppButton />
+        <ScrollToTop />
         <Analytics />
       </body>
     </html>
