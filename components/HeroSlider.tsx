@@ -34,7 +34,7 @@ export default function HeroSlider() {
   }, []);
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative h-screen md:h-screen overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade, Navigation]}
         effect="fade"
@@ -131,7 +131,7 @@ export default function HeroSlider() {
                 <img
                   src={slideImages[slide.src as keyof typeof slideImages]}
                   alt={slide.title}
-                  className="w-full h-full object-cover scale-125 blur-3xl brightness-75"
+                  className="w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                 />
               ) : (
                 <video
@@ -143,7 +143,7 @@ export default function HeroSlider() {
                   loop
                   playsInline
                   poster={slide.poster}
-                  className="w-full h-full object-cover scale-125 blur-3xl brightness-75"
+                  className="w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                 >
                   <source src={slide.src} type="video/mp4" />
                 </video>
@@ -154,14 +154,14 @@ export default function HeroSlider() {
             <div className="absolute inset-0 " />
 
             {/* Content */}
-            <div className="relative h-full flex items-center justify-center">
+            <div className="relative h-full flex items-center justify-center px-4 md:px-0">
               <div className="container-section">
-                <div className="items-center">
+                <div className="items-center w-full">
 
                   {/* Media Content */}
-                  <div className="flex justify-center lg:justify-end">
-                    <div className="relative w-full">
-                      <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm">
+                  <div className="flex justify-center lg:justify-end w-full">
+                    <div className="relative w-full max-w-sm md:max-w-md lg:max-w-none mx-auto lg:mx-0">
+                      <div className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
                         {slide.type === 'image' ? (
                           <img
                             src={slideImages[slide.src as keyof typeof slideImages]}
@@ -202,19 +202,28 @@ export default function HeroSlider() {
       </button>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 right-8 z-10 hidden lg:block">
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-10 hidden lg:block">
         <div className="animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
+          <div className="w-5 h-8 md:w-6 md:h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-2 md:h-3 bg-white/70 rounded-full mt-1.5 md:mt-2 animate-pulse" />
           </div>
         </div>
       </div>
 
       <style dangerouslySetInnerHTML={{
         __html: `
-          .swiper-pagination { display: flex; gap: 12px; align-items: center; justify-content: center; }
-          .swiper-pagination-bullets { bottom: 2rem !important; }
-          .swiper-pagination-bullet { position: relative; width: 56px; height: 4px; border-radius: 9999px; background: rgba(255,255,255,0.35); overflow: hidden; cursor: pointer; opacity: 1; padding: 0; }
+          .swiper-pagination { display: flex; gap: 8px; align-items: center; justify-content: center; }
+          
+          @media (min-width: 768px) {
+            .swiper-pagination { gap: 12px; }
+          }
+          .swiper-pagination-bullets { bottom: 1rem !important; }
+          .swiper-pagination-bullet { position: relative; width: 40px; height: 3px; border-radius: 9999px; background: rgba(255,255,255,0.35); overflow: hidden; cursor: pointer; opacity: 1; padding: 0; }
+          
+          @media (min-width: 768px) {
+            .swiper-pagination-bullets { bottom: 2rem !important; }
+            .swiper-pagination-bullet { width: 56px; height: 4px; }
+          }
           .swiper-pagination-bullet:hover { background: rgba(255,255,255,0.5); }
           .swiper-pagination-bullet-active { background: rgba(255,255,255,0.35); }
           .bullet-track { position: absolute; inset: -8px; display: block; }
@@ -266,6 +275,13 @@ export default function HeroSlider() {
             .swiper-button-next,
             .swiper-button-prev {
               display: none;
+            }
+          }
+          
+          /* Mobile-specific media adjustments */
+          @media (max-width: 768px) {
+            .swiper-slide .aspect-\[4\/5\] {
+              max-height: 70vh;
             }
           }
         `
