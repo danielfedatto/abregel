@@ -2,14 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
+import { Autoplay, Pagination, EffectFade, Navigation } from 'swiper/modules';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
 
 import { heroSlides } from '@/data/slides';
 const slideImages = {
@@ -35,11 +36,11 @@ export default function HeroSlider() {
   return (
     <section className="relative h-screen overflow-hidden">
       <Swiper
-        modules={[Autoplay, Pagination, EffectFade]}
+        modules={[Autoplay, Pagination, EffectFade, Navigation]}
         effect="fade"
         autoplay={{
           delay: 6000,
-          disableOnInteraction: true,
+          disableOnInteraction: false,
         }}
         pagination={{
           clickable: true,
@@ -53,6 +54,10 @@ export default function HeroSlider() {
               </button>
             `;
           },
+        }}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
         }}
         loop={true}
         onInit={(swiper) => {
@@ -71,6 +76,9 @@ export default function HeroSlider() {
         onSlideChange={(swiper) => {
           const el = swiper.pagination?.el as HTMLElement | null;
           if (!el) return;
+          const delay = typeof swiper.params.autoplay === 'object' ? (swiper.params.autoplay as any).delay : 6000;
+          el.style.setProperty('--slide-interval', `${delay}ms`);
+          
           const bullets = el.querySelectorAll('.swiper-pagination-bullet');
           bullets.forEach((b) => {
             b.classList.remove('is-active');
@@ -86,6 +94,32 @@ export default function HeroSlider() {
           });
           const active = el.querySelector('.swiper-pagination-bullet-active');
           active?.classList.add('is-active');
+        }}
+        onAutoplayStart={(swiper) => {
+          const el = swiper.pagination?.el as HTMLElement | null;
+          if (el) {
+            const active = el.querySelector('.swiper-pagination-bullet-active');
+            if (active) {
+              const prog = active.querySelector('.bullet-progress') as HTMLElement | null;
+              if (prog) {
+                prog.style.animation = 'none';
+                prog.offsetHeight;
+                prog.style.animation = '';
+              }
+            }
+          }
+        }}
+        onAutoplayStop={(swiper) => {
+          const el = swiper.pagination?.el as HTMLElement | null;
+          if (el) {
+            const active = el.querySelector('.swiper-pagination-bullet-active');
+            if (active) {
+              const prog = active.querySelector('.bullet-progress') as HTMLElement | null;
+              if (prog) {
+                prog.style.animationPlayState = 'paused';
+              }
+            }
+          }
         }}
         className="h-full"
       >
@@ -158,6 +192,15 @@ export default function HeroSlider() {
 
       {/* Default Swiper pagination will render inside Swiper */}
 
+      {/* Custom Navigation Buttons */}
+      <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50">
+        <ChevronLeft className="h-6 w-6" />
+      </button>
+      
+      <button className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50">
+        <ChevronRight className="h-6 w-6" />
+      </button>
+
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 right-8 z-10 hidden lg:block">
         <div className="animate-bounce">
@@ -174,10 +217,57 @@ export default function HeroSlider() {
           .swiper-pagination-bullet { position: relative; width: 56px; height: 4px; border-radius: 9999px; background: rgba(255,255,255,0.35); overflow: hidden; cursor: pointer; opacity: 1; padding: 0; }
           .swiper-pagination-bullet:hover { background: rgba(255,255,255,0.5); }
           .swiper-pagination-bullet-active { background: rgba(255,255,255,0.35); }
-          .bullet-track { position: absolute; inset: 0; display: block; }
+          .bullet-track { position: absolute; inset: -8px; display: block; }
           .bullet-progress { position: absolute; right: 0; left: auto; top: 0; bottom: 0; width: 8px; background: #ffffff; border-radius: 9999px; }
           .swiper-pagination-bullet.is-active .bullet-progress { animation: sliding var(--slide-interval, 6000ms) linear forwards; transform-origin: right center; }
           @keyframes sliding { from { width: 8px; } to { width: 100%; } }
+          
+          /* Hide default Swiper navigation buttons */
+          .swiper-button-next:after,
+          .swiper-button-prev:after {
+            display: none;
+          }
+          
+          /* Custom navigation button styles */
+          .swiper-button-next,
+          .swiper-button-prev {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            z-index: 10;
+          }
+          
+          .swiper-button-next:hover,
+          .swiper-button-prev:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+          }
+          
+          .swiper-button-next {
+            right: 16px;
+          }
+          
+          .swiper-button-prev {
+            left: 16px;
+          }
+          
+          /* Hide navigation on mobile */
+          @media (max-width: 768px) {
+            .swiper-button-next,
+            .swiper-button-prev {
+              display: none;
+            }
+          }
         `
       }} />
     </section>
