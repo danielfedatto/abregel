@@ -38,10 +38,11 @@ export default function HeroSlider() {
       <Swiper
         modules={[Autoplay, Pagination, EffectFade, Navigation]}
         effect="fade"
-        autoplay={{
-          delay: 6000,
-          disableOnInteraction: false,
-        }}
+        // autoplay={{
+        //   delay: 6000,
+        //   disableOnInteraction: false,
+        // }}
+        autoplay={false}
         pagination={{
           clickable: true,
           bulletClass: 'swiper-pagination-bullet',

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import NewsletterForm from './NewsletterForm';
 // Using public assets in Next.js
 
 const navigation = {
@@ -33,6 +34,16 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-primary-900 text-white">
+      {/* Newsletter Section - Full Width */}
+      <div className="bg-gradient-to-r from-primary-800 to-primary-700 py-16">
+        <div className="container-section">
+          <div className="w-full">
+            <NewsletterForm />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
       <div className="container-section py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Logo e Descrição */}
@@ -71,9 +82,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
+          {/* Links Institucional */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Institucional</h4>
+            <h4 className="text-lg font-semibold mb-6 text-accent-400">Institucional</h4>
             <ul className="space-y-3">
               {navigation.institucional.map((item) => (
                 <li key={item.name}>
@@ -88,8 +99,9 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Links Serviços */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Serviços</h4>
+            <h4 className="text-lg font-semibold mb-6 text-accent-400">Serviços</h4>
             <ul className="space-y-3">
               {navigation.servicos.map((item) => (
                 <li key={item.name}>
