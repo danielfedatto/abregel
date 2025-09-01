@@ -29,16 +29,20 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur supports-[backdrop-filter]:bg-white/10 border-b border-white/20`}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/95 border-b border-gray-200 shadow-lg' 
+          : 'bg-white/10 backdrop-blur supports-[backdrop-filter]:bg-white/10 border-b border-white/20'
+      }`}
     >
       <nav className="container-section">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <img
-              src="/assets/logo.svg"
+              src={isScrolled ? "/assets/logo.svg" : "/assets/white_logo.svg"}
               alt="Sindicato Industrial"
-              className="h-8 w-auto lg:h-12 object-contain"
+              className="h-8 w-auto lg:h-12 object-contain transition-all duration-300"
             />
           </Link>
 
@@ -58,8 +62,6 @@ export default function Header() {
               </Link>
             ))}
           </div>
-
-          
 
           {/* Mobile Menu */}
           <div className="lg:hidden">
@@ -86,7 +88,6 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
-                  
                 </div>
               </SheetContent>
             </Sheet>
