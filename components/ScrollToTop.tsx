@@ -31,6 +31,7 @@ export default function ScrollToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
+          // Posicionado à direita, com z-index maior que o botão do WhatsApp
           className="fixed bottom-8 right-8 z-50 bg-primary-500 hover:bg-primary-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
           aria-label="Voltar ao topo"
         >

@@ -14,7 +14,9 @@ export default function WhatsAppButton() {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-8 left-8 z-50 bg-primary-500 hover:bg-primary-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      // Posicionado ao lado direito, ao lado esquerdo do botão "back to top"
+      // right-20 (80px) em mobile, right-24 (96px) em desktop
+      className="fixed bottom-8 right-20 md:right-24 z-40 bg-[#25D366] hover:bg-[#128C7E] text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
       aria-label="Conversar no WhatsApp"
     >
       <MessageCircle className="h-6 w-6" />
