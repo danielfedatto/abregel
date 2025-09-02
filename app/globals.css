@@ -4,18 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Sindicato Design System - Cores baseadas na paleta institucional */
+/* Sindicato Design System - Cores baseadas na paleta institucional com contraste WCAG 2 AA */
 
 @layer base {
   :root {
-    /* Paleta institucional do sindicato */
-    --primary-900: 207 81% 17%;     /* #0F4379 */
-    --primary-700: 212 62% 44%;     /* #306BB3 */
-    --primary-500: 197 75% 58%;     /* #3DB1E6 */
-    --accent-400: 189 54% 64%;      /* #6FC7DA */
-    --muted-400: 0 0% 69%;          /* #B0B0B3 */
+    /* Paleta institucional do sindicato - Ajustada para melhor contraste */
+    --primary-900: 207 81% 17%;     /* #0F4379 - Mantido para fundos escuros */
+    --primary-700: 212 62% 44%;     /* #306BB3 - Mantido para fundos claros */
+    --primary-500: 197 75% 45%;     /* #2A8BC7 - Escurecido para melhor contraste */
+    --accent-400: 189 54% 45%;      /* #4A9BA8 - Escurecido para melhor contraste */
+    --muted-400: 0 0% 45%;          /* #737373 - Escurecido para melhor contraste */
 
-    /* Cores semânticas baseadas na paleta */
+    /* Cores semânticas baseadas na paleta - Ajustadas para WCAG 2 AA */
     --background: 0 0% 100%;
     --foreground: 207 81% 17%;
     
@@ -32,9 +32,9 @@
     --secondary-foreground: 207 81% 17%;
     
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 35%;  /* Escurecido para melhor contraste */
     
-    --accent: 189 54% 64%;
+    --accent: 189 54% 45%;          /* Escurecido para melhor contraste */
     --accent-foreground: 207 81% 17%;
     
     --destructive: 0 84% 60%;
@@ -76,7 +76,7 @@
     --secondary-foreground: 0 0% 95%;
     
     --muted: 207 81% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted-foreground: 0 0% 75%;  /* Clareado para melhor contraste no modo escuro */
     
     --accent: 189 54% 64%;
     --accent-foreground: 207 81% 17%;
@@ -149,5 +149,53 @@
     @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0;
     @apply after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right;
     @apply after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+}
+
+@layer utilities {
+  /* Utilitários para resolver problemas de contraste WCAG 2 AA */
+  
+  /* Contraste melhorado para textos em fundos claros */
+  .text-contrast-high {
+    @apply text-gray-900;
+  }
+  
+  .text-contrast-medium {
+    @apply text-gray-700;
+  }
+  
+  .text-contrast-low {
+    @apply text-gray-600;
+  }
+  
+  /* Contraste melhorado para textos em fundos escuros */
+  .text-contrast-dark-high {
+    @apply text-white;
+  }
+  
+  .text-contrast-dark-medium {
+    @apply text-gray-200;
+  }
+  
+  .text-contrast-dark-low {
+    @apply text-gray-300;
+  }
+  
+  /* Backgrounds com melhor contraste */
+  .bg-contrast-safe {
+    @apply bg-gray-100;
+  }
+  
+  .bg-contrast-safe-dark {
+    @apply bg-gray-800;
+  }
+  
+  /* Links com melhor contraste */
+  .link-contrast-safe {
+    @apply text-blue-700 hover:text-blue-900 underline;
+  }
+  
+  .link-contrast-safe-dark {
+    @apply text-blue-300 hover:text-blue-100 underline;
   }
 }
