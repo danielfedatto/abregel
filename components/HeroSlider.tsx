@@ -50,7 +50,15 @@ export default function HeroSlider() {
           renderBullet: (index, className) => {
             const slide = index + 1;
             return `
-              <button class="${className}" type="button" role="tab" aria-controls="heroBanner-slide${slide}" aria-label="Go to slide ${slide}" tabindex="0">
+              <button 
+                class="${className}" 
+                type="button" 
+                aria-controls="heroBanner-slide${slide}" 
+                aria-label="Ir para slide ${slide}" 
+                aria-current="false"
+                tabindex="0"
+                data-slide-index="${index}"
+              >
                 <span class="bullet-track"><span class="bullet-progress"></span></span>
               </button>
             `;
@@ -65,10 +73,17 @@ export default function HeroSlider() {
           const delay = typeof swiper.params.autoplay === 'object' ? (swiper.params.autoplay as any).delay : 6000;
           const el = swiper.pagination?.el as HTMLElement | null;
           if (el) {
+            // Adicionar aria-label para acessibilidade
+            el.setAttribute('aria-label', 'Navegação dos slides');
+            
             el.style.setProperty('--slide-interval', `${delay}ms`);
             requestAnimationFrame(() => {
               const bullets = el.querySelectorAll('.swiper-pagination-bullet');
-              bullets.forEach((b) => b.classList.remove('is-active'));
+              bullets.forEach((b, bulletIndex) => {
+                b.classList.remove('is-active');
+                // Definir aria-current inicial
+                (b as HTMLElement).setAttribute('aria-current', bulletIndex === 0 ? 'true' : 'false');
+              });
               const active = el.querySelector('.swiper-pagination-bullet-active');
               active?.classList.add('is-active');
             });
@@ -81,18 +96,21 @@ export default function HeroSlider() {
           el.style.setProperty('--slide-interval', `${delay}ms`);
           
           const bullets = el.querySelectorAll('.swiper-pagination-bullet');
-          bullets.forEach((b) => {
-            b.classList.remove('is-active');
-            const prog = (b as HTMLElement).querySelector('.bullet-progress') as HTMLElement | null;
-            if (prog) {
-              // restart CSS animation
-              prog.style.animation = 'none';
-              // force reflow
-              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-              prog.offsetHeight;
-              prog.style.animation = '';
-            }
-          });
+                      bullets.forEach((b, bulletIndex) => {
+              b.classList.remove('is-active');
+              // Atualizar aria-current para todos os bullets
+              (b as HTMLElement).setAttribute('aria-current', bulletIndex === swiper.realIndex ? 'true' : 'false');
+              
+              const prog = (b as HTMLElement).querySelector('.bullet-progress') as HTMLElement | null;
+              if (prog) {
+                // restart CSS animation
+                prog.style.animation = 'none';
+                // force reflow
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                prog.offsetHeight;
+                prog.style.animation = '';
+              }
+            });
           const active = el.querySelector('.swiper-pagination-bullet-active');
           active?.classList.add('is-active');
         }}
@@ -125,7 +143,7 @@ export default function HeroSlider() {
         className="h-full"
       >
         {heroSlides.map((slide, index) => (
-          <SwiperSlide key={slide.id} className="relative">
+          <SwiperSlide key={slide.id} className="relative" id={`heroBanner-slide${index + 1}`}>
             {/* Background Layer - Blurred */}
             <div className="absolute inset-0 -z-10">
               {slide.type === 'image' ? (
@@ -194,12 +212,22 @@ export default function HeroSlider() {
       {/* Default Swiper pagination will render inside Swiper */}
 
       {/* Custom Navigation Buttons */}
-      <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50">
+      <button 
+        className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
+        aria-label="Slide anterior"
+        title="Slide anterior"
+      >
         <ChevronLeft className="h-6 w-6" />
+        <span className="sr-only">Slide anterior</span>
       </button>
       
-      <button className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50">
+      <button 
+        className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50"
+        aria-label="Próximo slide"
+        title="Próximo slide"
+      >
         <ChevronRight className="h-6 w-6" />
+        <span className="sr-only">Próximo slide</span>
       </button>
 
       {/* Scroll Indicator */}
@@ -213,7 +241,12 @@ export default function HeroSlider() {
 
       <style dangerouslySetInnerHTML={{
         __html: `
-          .swiper-pagination { display: flex; gap: 8px; align-items: center; justify-content: center; }
+          .swiper-pagination { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+            justify-content: center; 
+          }
           
           @media (min-width: 768px) {
             .swiper-pagination { gap: 12px; }
