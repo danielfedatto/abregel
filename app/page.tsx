@@ -1,23 +1,23 @@
 import Link from 'next/link';
 import { ArrowRight, Target, Eye, Heart, Users, Building, Globe, CheckCircle } from 'lucide-react';
 import Header from '@/components/Header';
-import HeroSlider from '@/components/HeroSlider';
-import ServiceCard from '@/components/ServiceCard';
-import PostCard from '@/components/PostCard';
-import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
-import { services } from '@/data/services';
-import { posts } from '@/data/posts';
-import { partners } from '@/data/partners';
-import Testimonials from '@/components/Testimonials';
-import PricingPlans from '@/components/PricingPlans';
+
+// Componentes Contentful
+import HeroSlider from '@/components/HeroSlider';
+import ContentfulServices from '@/components/ContentfulServices';
+import ContentfulTestimonials from '@/components/ContentfulTestimonials';
+import ContentfulPricingPlans from '@/components/ContentfulPricingPlans';
+import ContentfulPartners from '@/components/ContentfulPartners';
+import ContentfulNews from '@/components/ContentfulNews';
+import ContentfulFAQ from '@/components/ContentfulFAQ';
 
 const Index = () => {
-  const latestPosts = posts.slice(0, 3);
-
   return (
     <div className="min-h-screen">
       <Header />
+      
+      {/* Hero Slider do Contentful */}
       <HeroSlider />
 
       {/* Quem Somos Section */}
@@ -75,97 +75,20 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Serviços Section */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-section">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Nossos Serviços</h2>
-            <p className="section-subtitle mx-auto">
-              Oferecemos uma gama completa de serviços especializados para 
-              impulsionar o crescimento e competitividade das empresas do setor.
-            </p>
-          </div>
+      {/* Serviços Section do Contentful */}
+      <ContentfulServices />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
+      {/* Depoimentos Section do Contentful */}
+      <ContentfulTestimonials />
 
-          <div className="text-center mt-12">
-            <Link href="/servicos" className="btn-outline">
-              Ver Todos os Serviços
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Planos de Associação Section do Contentful */}
+      <ContentfulPricingPlans />
 
-      {/* Depoimentos Section */}
-      <Testimonials />
+      {/* Parcerias Section do Contentful */}
+      <ContentfulPartners />
 
-      {/* Planos de Associação Section */}
-      <PricingPlans />
-
-      {/* Parcerias Section */}
-      <section className="section-padding">
-        <div className="container-section">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Nossos Parceiros</h2>
-            <p className="section-subtitle mx-auto">
-              Trabalhamos em conjunto com empresas e organizações de referência 
-              para oferecer ainda mais valor aos nossos associados.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {partners.slice(0, 8).map((partner, index) => (
-              <div 
-                key={partner.name}
-                className="flex items-center justify-center p-6 bg-card rounded-xl border border-border/50 opacity-70 hover:opacity-100 transition-opacity duration-300 card-hover"
-              >
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-muted rounded-lg mb-3 mx-auto flex items-center justify-center">
-                    <Building className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <span className="text-sm font-medium text-muted-foreground">{partner.name}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/parcerias" className="btn-outline">
-              Conheça Todas as Parcerias
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Notícias Section */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-section">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div>
-              <h2 className="section-title mb-0">Últimas Notícias</h2>
-              <p className="section-subtitle">
-                Mantenha-se atualizado com as principais novidades do setor.
-              </p>
-            </div>
-            <Link 
-              href="/noticias" 
-              className="mt-4 md:mt-0 btn-outline"
-            >
-              Ver Todas as Notícias
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestPosts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Notícias Section do Contentful */}
+      <ContentfulNews />
 
       {/* CTA Section */}
       <section className="section-padding bg-gradient-primary text-white">
@@ -217,8 +140,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <FAQ />
+      {/* FAQ Section do Contentful */}
+      <ContentfulFAQ />
 
       <Footer />
     </div>

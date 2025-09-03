@@ -39,8 +39,28 @@ export interface ContentfulAsset {
 
 // Função para obter URL da imagem
 export function getImageUrl(image: ContentfulImage): string {
-  return `https:${image.fields.file.url}`;
+  return `https:${image?.fields?.file?.url}`;
 }
+
+// Função para obter URL do vídeo
+
+// Função utilitária para extrair ID do YouTube de qualquer URL
+export function extractYouTubeId(url: string): string {
+  if (!url) return '';
+  
+  // Extrair ID do YouTube de diferentes formatos de URL
+  const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(youtubeRegex);
+  
+  return match ? match[1] : '';
+}
+
+export function getVideoId(video: string): string {
+  const videoUrl = video;
+  if (!videoUrl) return '';
+  return extractYouTubeId(videoUrl);
+}
+
 
 // Função para obter URL da imagem com parâmetros
 export function getImageUrlWithParams(

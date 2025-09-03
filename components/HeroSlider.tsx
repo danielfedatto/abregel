@@ -3,7 +3,9 @@
 import { useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade, Navigation } from 'swiper/modules';
-import Link from 'next/link';
+import { useContentful } from '@/hooks/use-contentful';
+import { HeroSlide } from '@/types/contentful';
+import { getImageUrl, getVideoId } from '@/lib/contentful';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 // Import Swiper styles
@@ -21,6 +23,13 @@ const slideImages = {
 
 export default function HeroSlider() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const { data: slides, loading, error } = useContentful<HeroSlide>('heroSlide', {
+    limit: 10,
+    order: ['fields.order'],
+  });
+
+  console.log(slides);
 
   useEffect(() => {
     // Ensure videos autoplay when component mounts
@@ -142,30 +151,18 @@ export default function HeroSlider() {
         }}
         className="h-full"
       >
-        {heroSlides.map((slide, index) => (
-          <SwiperSlide key={slide.id} className="relative" id={`heroBanner-slide${index + 1}`}>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={slide.sys.id} className="relative" id={`heroBanner-slide${index + 1}`}>
             {/* Background Layer - Blurred */}
             <div className="absolute inset-0 -z-10">
-              {slide.type === 'image' ? (
+              {slide.fields.type === 'image' ? (
                 <img
-                  src={slideImages[slide.src as keyof typeof slideImages]}
-                  alt={slide.title}
+                  src={getImageUrl(slide.fields.image)}
+                  alt={slide.fields.title}
                   className="w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                 />
               ) : (
-                <video
-                  ref={(el) => {
-                    videoRefs.current[index] = el;
-                  }}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster={slide.poster}
-                  className="w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
-                >
-                  <source src={slide.src} type="video/mp4" />
-                </video>
+                <iframe className="aspect-video w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } allowFullScreen/>
               )}
             </div>
 
@@ -181,23 +178,22 @@ export default function HeroSlider() {
                   <div className="flex justify-center lg:justify-end w-full">
                     <div className="relative w-full max-w-sm md:max-w-md lg:max-w-none mx-auto lg:mx-0">
                       <div className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
-                        {slide.type === 'image' ? (
+                        {slide.fields.type === 'image' ? (
                           <img
-                            src={slideImages[slide.src as keyof typeof slideImages]}
-                            alt={slide.title}
+                            src={getImageUrl(slide.fields.image)}
+                            alt={slide.fields.title}
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <video
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            poster={slide.poster}
-                            className="w-full h-full object-cover"
-                          >
-                            <source src={slide.src} type="video/mp4" />
-                          </video>
+                          <iframe 
+                            className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
+                            width="1920"
+                            height="1080"
+                            src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1`}
+                            title={slide.fields.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            />
                         )}
                       </div>
                     </div>
