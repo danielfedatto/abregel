@@ -789,14 +789,7 @@ async function createContentTypes() {
           // Content type não existe, continuar com a criação
         }
         
-        const contentType = await environment.createContentTypeWithId(contentTypeDef.id, {
-          name: contentTypeDef.name,
-          description: contentTypeDef.description,
-          fields: contentTypeDef.fields,
-        });
         
-        // Publicar o content type
-        await contentType.publish();
         
         console.log(`✅ Content Type "${contentTypeDef.name}" criado e publicado com sucesso!`);
       } catch (error) {
