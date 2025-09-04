@@ -27,6 +27,7 @@ export interface HeroSlide extends ContentfulEntry {
     subtitle?: string;
     description?: string;
     image: ContentfulImage;
+    imageMobile?: ContentfulImage;
     video?: ContentfulImage;
     poster?: ContentfulImage;
     type: 'image' | 'video';
@@ -146,6 +147,22 @@ export interface SiteSettings extends ContentfulEntry {
     };
     newsletterTitle?: string;
     newsletterDescription?: string;
+  };
+}
+
+// Tipo para Seção Quem Somos
+export interface AboutSection extends ContentfulEntry {
+  fields: {
+    title: string;
+    subtitle: string;
+    description: string;
+    ctaText: string;
+    ctaLink: string;
+    mission: string;
+    vision: string;
+    values: string;
+    image?: ContentfulImage;
+    order: number;
   };
 }
 

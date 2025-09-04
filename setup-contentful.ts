@@ -65,6 +65,19 @@ const contentTypes = [
         ],
       },
       {
+        id: 'imageMobile',
+        name: 'Imagem Mobile',
+        type: 'Link',
+        required: false,
+        localized: false,
+        linkType: 'Asset',
+        validations: [
+          {
+            linkMimetypeGroup: ['image'],
+          },
+        ],
+      },
+      {
         id: 'video',
         name: 'Vídeo',
         type: 'Link',
@@ -764,7 +777,152 @@ const contentTypes = [
       },
     ],
   },
+  {
+    id: 'aboutSection',
+    name: 'Seção Quem Somos',
+    description: 'Seção sobre a empresa/sindicato na homepage',
+    fields: [
+      {
+        id: 'title',
+        name: 'Título',
+        type: 'Symbol',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 100 } }],
+      },
+      {
+        id: 'subtitle',
+        name: 'Subtítulo',
+        type: 'Text',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 300 } }],
+      },
+      {
+        id: 'description',
+        name: 'Descrição',
+        type: 'Text',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 500 } }],
+      },
+      {
+        id: 'ctaText',
+        name: 'Texto do Botão',
+        type: 'Symbol',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 50 } }],
+      },
+      {
+        id: 'ctaLink',
+        name: 'Link do Botão',
+        type: 'Symbol',
+        required: true,
+        localized: false,
+        validations: [
+          {
+            regexp: {
+              pattern: '^https?://.*',
+              flags: '',
+            },
+          },
+        ],
+      },
+      {
+        id: 'mission',
+        name: 'Missão',
+        type: 'Text',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 300 } }],
+      },
+      {
+        id: 'vision',
+        name: 'Visão',
+        type: 'Text',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 300 } }],
+      },
+      {
+        id: 'values',
+        name: 'Valores',
+        type: 'Text',
+        required: true,
+        localized: false,
+        validations: [{ size: { max: 300 } }],
+      },
+      {
+        id: 'image',
+        name: 'Imagem',
+        type: 'Link',
+        required: false,
+        localized: false,
+        linkType: 'Asset',
+        validations: [
+          {
+            linkMimetypeGroup: ['image'],
+          },
+        ],
+      },
+      {
+        id: 'order',
+        name: 'Ordem',
+        type: 'Integer',
+        required: true,
+        localized: false,
+        validations: [{ range: { min: 1 } }],
+      },
+    ],
+  },
 ];
+
+async function updateHeroSlideContentType() {
+  try {
+    console.log('🔄 Atualizando Hero Slide Content Type...');
+    
+    const space = await client.getSpace(SPACE_ID);
+    const environment = await space.getEnvironment(ENVIRONMENT_ID);
+    
+    // Buscar o content type existente
+    const contentType = await environment.getContentType('heroSlide');
+    
+    // Verificar se o campo imageMobile já existe
+    const existingFields = contentType.fields.map(field => field.id);
+    if (existingFields.includes('imageMobile')) {
+      console.log('✅ Campo "imageMobile" já existe no Hero Slide');
+      return;
+    }
+    
+    // Adicionar o novo campo
+    const newField = {
+      id: 'imageMobile',
+      name: 'Imagem Mobile',
+      type: 'Link',
+      required: false,
+      localized: false,
+      linkType: 'Asset',
+      validations: [
+        {
+          linkMimetypeGroup: ['image'],
+        },
+      ],
+    };
+    
+    // Adicionar o campo ao content type
+    contentType.fields.push(newField);
+    
+    // Salvar as mudanças
+    const updatedContentType = await contentType.update();
+    await updatedContentType.publish();
+    
+    console.log('✅ Campo "imageMobile" adicionado ao Hero Slide com sucesso!');
+    
+  } catch (error) {
+    console.error('❌ Erro ao atualizar Hero Slide:', error);
+  }
+}
 
 async function createContentTypes() {
   try {
@@ -811,4 +969,9 @@ async function createContentTypes() {
 }
 
 // Executar o script
-// createContentTypes();
+async function main() {
+  await updateHeroSlideContentType();
+  await createContentTypes();
+}
+
+main();

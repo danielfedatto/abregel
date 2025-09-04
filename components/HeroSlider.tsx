@@ -156,11 +156,30 @@ export default function HeroSlider() {
             {/* Background Layer - Blurred */}
             <div className="absolute inset-0 -z-10">
               {slide.fields.type === 'image' ? (
-                <img
-                  src={getImageUrl(slide.fields.image)}
-                  alt={slide.fields.title}
-                  className="w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
-                />
+                <>
+                  {/* Desktop Image */}
+                  <img
+                    src={getImageUrl(slide.fields.image)}
+                    alt={slide.fields.title}
+                    className="hidden md:block w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
+                  />
+                  {/* Mobile Image */}
+                  {slide.fields.imageMobile && (
+                    <img
+                      src={getImageUrl(slide.fields.imageMobile)}
+                      alt={slide.fields.title}
+                      className="block md:hidden w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
+                    />
+                  )}
+                  {/* Fallback to desktop image if no mobile image */}
+                  {!slide.fields.imageMobile && (
+                    <img
+                      src={getImageUrl(slide.fields.image)}
+                      alt={slide.fields.title}
+                      className="block md:hidden w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
+                    />
+                  )}
+                </>
               ) : (
                 <iframe className="aspect-video w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } allowFullScreen/>
               )}
@@ -179,11 +198,28 @@ export default function HeroSlider() {
                     <div className="relative w-full max-w-sm md:max-w-md lg:max-w-none mx-auto lg:mx-0">
                       <div className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
                         {slide.fields.type === 'image' ? (
-                          <img
-                            src={getImageUrl(slide.fields.image)}
-                            alt={slide.fields.title}
-                            className="w-full h-full object-cover"
-                          />
+                          <>
+                            {/* Desktop Image */}
+                            <img
+                              src={getImageUrl(slide.fields.image)}
+                              alt={slide.fields.title}
+                              className="hidden md:block w-full h-full object-cover"
+                            />
+                            {/* Mobile Image */}
+                            {slide.fields.imageMobile ? (
+                              <img
+                                src={getImageUrl(slide.fields.imageMobile)}
+                                alt={slide.fields.title}
+                                className="block md:hidden w-full h-full object-cover"
+                              />
+                            ) : (
+                              <img
+                                src={getImageUrl(slide.fields.image)}
+                                alt={slide.fields.title}
+                                className="block md:hidden w-full h-full object-cover"
+                              />
+                            )}
+                          </>
                         ) : (
                           <iframe 
                             className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
