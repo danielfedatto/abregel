@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-// Using public assets in Next.js
+import { useSiteSettings } from '@/hooks/use-site-settings';
+import { getImageUrl } from '@/lib/contentful';
 
 const navigation = [
   { name: 'Quem Somos', href: '/quem-somos' },
@@ -17,6 +18,7 @@ const navigation = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { settings, loading } = useSiteSettings();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,11 +41,19 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <img
-              src={isScrolled ? "/assets/logo.svg" : "/assets/white_logo.svg"}
-              alt="Sindicato Industrial"
-              className="h-8 w-auto lg:h-12 object-contain transition-all duration-300"
-            />
+            {loading ? (
+              <div className="h-8 w-32 lg:h-12 lg:w-40 bg-muted-foreground/20 rounded animate-pulse"></div>
+            ) : (
+              <img
+                src={
+                  isScrolled 
+                    ? (settings?.logo ? getImageUrl(settings.logo) : "/assets/logo.svg")
+                    : (settings?.logoWhite ? getImageUrl(settings.logoWhite) : "/assets/white_logo.svg")
+                }
+                alt={settings?.siteTitle || "Sindicato Industrial"}
+                className="h-8 w-auto lg:h-12 object-contain transition-all duration-300"
+              />
+            )}
           </Link>
 
           {/* Desktop Navigation */}

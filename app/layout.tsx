@@ -3,6 +3,7 @@ import type { Viewport } from 'next'
 import { Montserrat } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
 import Providers from '@/components/Providers';
+import LayoutWrapper from '@/components/LayoutWrapper';
 import './globals.css';
 import NewsletterModal from '@/components/NewsletterModal'
 import ScrollToTop from '@/components/ScrollToTop'
@@ -69,7 +70,9 @@ export default function RootLayout({
     <html lang="pt-BR" className={montserrat.variable}>
       <body className="font-sans antialiased">
         <Providers>
-          {children}
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
         </Providers>
         <NewsletterModal />
         <WhatsAppButton />

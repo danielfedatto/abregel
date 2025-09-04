@@ -2,41 +2,58 @@
 
 import { useContentful } from '@/hooks/use-contentful';
 import { NewsPost } from '@/types/contentful';
-import { getImageUrl, formatContentfulDate, extractRichText } from '@/lib/contentful';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
+import { getImageUrl, formatContentfulDate } from '@/lib/contentful';
+import { Calendar, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ContentfulNews() {
   const { data: newsPosts, loading, error } = useContentful<NewsPost>('newsPost', {
-    limit: 6,
+    limit: 3,
     order: ['-fields.publishDate'],
   });
 
   if (loading) {
     return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Últimas Notícias
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Carregando notícias...
-            </p>
+      <section className="section-padding bg-muted/30">
+        <div className="container-section">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div>
+              <h2 className="section-title mb-0">Últimas Notícias</h2>
+              <p className="section-subtitle">
+                Carregando notícias...
+              </p>
+            </div>
+            <div className="mt-4 md:mt-0 btn-outline animate-pulse">
+              Ver Todas as Notícias
+            </div>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="animate-pulse">
-                <div className="h-48 bg-gray-300 rounded-t-lg"></div>
-                <CardHeader>
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-300 rounded mb-4"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                </CardHeader>
-              </Card>
+              <article key={i} className="group bg-card rounded-2xl overflow-hidden card-hover border border-border/50 animate-pulse">
+                <div className="aspect-video bg-muted relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-primary opacity-20" />
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-muted-foreground/20 px-3 py-1 rounded-full text-sm font-medium w-16 h-6"></div>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex items-center text-muted-foreground text-sm mb-3">
+                    <div className="h-4 w-4 mr-2 bg-muted-foreground/20 rounded"></div>
+                    <div className="h-4 w-24 bg-muted-foreground/20 rounded"></div>
+                  </div>
+                  
+                  <div className="h-6 bg-muted-foreground/20 rounded mb-3"></div>
+                  <div className="h-6 bg-muted-foreground/20 rounded mb-3 w-4/5"></div>
+                  
+                  <div className="h-4 bg-muted-foreground/20 rounded mb-2"></div>
+                  <div className="h-4 bg-muted-foreground/20 rounded mb-2"></div>
+                  <div className="h-4 bg-muted-foreground/20 rounded mb-4 w-3/4"></div>
+                  
+                  <div className="h-4 bg-muted-foreground/20 rounded w-20"></div>
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -46,12 +63,10 @@ export default function ContentfulNews() {
 
   if (error || !newsPosts || newsPosts.length === 0) {
     return (
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Últimas Notícias
-          </h2>
-          <p className="text-lg text-gray-600">
+      <section className="section-padding bg-muted/30">
+        <div className="container-section text-center">
+          <h2 className="section-title">Últimas Notícias</h2>
+          <p className="section-subtitle">
             Nenhuma notícia encontrada. Verifique o Contentful.
           </p>
         </div>
@@ -60,110 +75,69 @@ export default function ContentfulNews() {
   }
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Últimas Notícias
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Fique por dentro das novidades e acontecimentos importantes
-          </p>
+    <section className="section-padding bg-muted/30">
+      <div className="container-section">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-12">
+          <div>
+            <h2 className="section-title mb-0">Últimas Notícias</h2>
+            <p className="section-subtitle">
+              Mantenha-se atualizado com as principais novidades do setor.
+            </p>
+          </div>
+          <Link 
+            href="/noticias" 
+            className="mt-4 md:mt-0 btn-outline"
+          >
+            Ver Todas as Notícias
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {newsPosts.map((post) => (
-            <Card key={post.sys.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
-              {/* Imagem da notícia */}
-              {post.fields.featuredImage && (
-                <div className="relative overflow-hidden">
+            <article key={post.sys.id} className="group bg-card rounded-2xl overflow-hidden card-hover border border-border/50">
+              <div className="aspect-video bg-muted relative overflow-hidden">
+                {post.fields.featuredImage ? (
                   <img
                     src={getImageUrl(post.fields.featuredImage)}
                     alt={post.fields.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {post.fields.category && (
-                    <Badge className="absolute top-4 left-4 bg-primary-500 text-white">
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-primary opacity-20" />
+                )}
+                {post.fields.category && (
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
                       {post.fields.category}
-                    </Badge>
-                  )}
-                </div>
-              )}
-
-              <CardHeader className="pb-4">
-                {/* Meta informações */}
-                <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                  {post.fields.publishDate && (
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{formatContentfulDate(post.fields.publishDate)}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>5 min</span>
+                    </span>
                   </div>
+                )}
+              </div>
+              
+              <div className="p-6">
+                <div className="flex items-center text-muted-foreground text-sm mb-3">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  {post.fields.publishDate && formatContentfulDate(post.fields.publishDate)}
                 </div>
-
-                {/* Título */}
-                <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                
+                <h3 className="text-xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
                   {post.fields.title}
-                </CardTitle>
-
-                {/* Autor */}
-                {post.fields.author && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <User className="w-4 h-4" />
-                    <span>{post.fields.author}</span>
-                  </div>
-                )}
-              </CardHeader>
-
-              <CardContent className="pt-0">
-                {/* Resumo */}
-                {post.fields.excerpt && (
-                  <CardDescription className="text-gray-600 mb-4 line-clamp-3">
-                    {post.fields.excerpt}
-                  </CardDescription>
-                )}
-
-                {/* Tags */}
-                {post.fields.tags && post.fields.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.fields.tags.slice(0, 3).map((tag, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="text-xs bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-
-                {/* Botão de leitura */}
-                <Button
-                  variant="outline"
-                  className="w-full group-hover:bg-primary-500 group-hover:text-white group-hover:border-primary-500 transition-all duration-300"
+                </h3>
+                
+                <p className="text-muted-foreground mb-4 line-clamp-3 leading-relaxed">
+                  {post.fields.excerpt}
+                </p>
+                
+                <Link 
+                  href={`/noticias/${post.fields.slug}`}
+                  className="inline-flex items-center text-primary font-medium link-hover group-hover:text-primary-700 transition-colors duration-300"
                 >
                   Ler mais
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </Button>
-              </CardContent>
-            </Card>
+                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </article>
           ))}
-        </div>
-
-        {/* Botão para ver todas as notícias */}
-        <div className="text-center mt-12">
-          <Button
-            size="lg"
-            className="bg-primary-500 hover:bg-primary-600 text-white px-8 py-3"
-          >
-            Ver todas as notícias
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </Button>
         </div>
       </div>
     </section>
