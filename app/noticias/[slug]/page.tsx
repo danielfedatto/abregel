@@ -120,7 +120,7 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
               <img
                 src={getImageUrl(post.fields.featuredImage)}
                 alt={post.fields.title}
-                className="hidden md:block w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
+                className="aspect-[4/5] md:block w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
               />
               
             </>
