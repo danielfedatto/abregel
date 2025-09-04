@@ -233,3 +233,55 @@ export interface Download extends ContentfulEntry {
     downloadCount?: number;
   };
 }
+
+// Tipo para CTA Section
+export interface CtaSection extends ContentfulEntry {
+  fields: {
+    title: string;
+    subtitle?: string;
+    description?: string;
+    ctaText: string;
+    ctaLink: string;
+    backgroundImage?: ContentfulImage;
+    backgroundColor?: 'primary' | 'secondary' | 'accent' | 'muted' | 'gradient';
+    textColor?: 'white' | 'black' | 'primary' | 'secondary';
+    order: number;
+  };
+}
+
+// Tipo para Navigation Link
+export interface NavigationLink extends ContentfulEntry {
+  fields: {
+    name: string;
+    href: string;
+    order: number;
+  };
+}
+
+// Tipo para Social Link
+export interface SocialLink extends ContentfulEntry {
+  fields: {
+    name: string;
+    href: string;
+    platform: 'facebook' | 'twitter' | 'linkedin' | 'instagram' | 'youtube' | 'tiktok';
+    order: number;
+  };
+}
+
+// Tipo para Footer
+export interface Footer extends ContentfulEntry {
+  fields: {
+    title: string;
+    description: string;
+    logo?: ContentfulImage;
+    address: string;
+    phone: string;
+    email: string;
+    institutionalLinks?: NavigationLink[];
+    serviceLinks?: NavigationLink[];
+    socialLinks?: SocialLink[];
+    copyright: string;
+    legalLinks?: NavigationLink[];
+    order: number;
+  };
+}
