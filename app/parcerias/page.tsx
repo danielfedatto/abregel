@@ -1,7 +1,8 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ContentfulFooter from '@/components/ContentfulFooter';
 import { partners } from '@/data/partners';
 import { Building, ArrowRight } from 'lucide-react';
+
 
 export const metadata = {
   title: 'Parcerias - Sindicato Industrial',
@@ -68,7 +69,7 @@ export default function ParceriasPage() {
         </div>
       </section>
 
-      <Footer />
+      <ContentfulFooter />
     </div>
   );
 }

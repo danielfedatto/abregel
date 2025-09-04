@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Target, Eye, Heart, Users, Award, Calendar } from 'lucide-react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ContentfulFooter from '@/components/ContentfulFooter';
 
 export default function QuemSomos() {
   const timeline = [
@@ -189,7 +189,7 @@ export default function QuemSomos() {
         </div>
       </section>
 
-      <Footer />
+      <ContentfulFooter />
     </div>
   );
 }

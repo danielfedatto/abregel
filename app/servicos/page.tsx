@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ContentfulFooter from '@/components/ContentfulFooter';
 import ServiceCard from '@/components/ServiceCard';
 import { services } from '@/data/services';
 
@@ -57,7 +57,7 @@ export default function ServicosPage() {
         </div>
       </section>
 
-      <Footer />
+      <ContentfulFooter />
     </div>
   );
 }

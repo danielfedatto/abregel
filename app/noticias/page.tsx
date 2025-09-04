@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ContentfulFooter from '@/components/ContentfulFooter';
 import ContentfulNewsPage from '@/components/ContentfulNewsPage';
 
 export const metadata = {
@@ -30,7 +30,7 @@ export default function NoticiasPage() {
       {/* News Grid */}
       <ContentfulNewsPage />
 
-      <Footer />
+      <ContentfulFooter />
     </div>
   );
 }

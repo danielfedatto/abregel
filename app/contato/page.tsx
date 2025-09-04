@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import ContentfulFooter from '@/components/ContentfulFooter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -250,7 +250,7 @@ export default function Contato() {
         </div>
       </section>
 
-      <Footer />
+      <ContentfulFooter />
     </div>
   );
 }
