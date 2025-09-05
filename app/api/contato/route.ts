@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     // Preparar o conteúdo do e-mail
     const emailContent = {
       from: `"Site Abregel" <${email}>`,
-      to: email, // Enviar para o próprio e-mail configurado
+      to: [email, 'contato@abemf.com.br'], // Enviar para ambos os e-mails
       replyTo: validatedData.email, // Permitir resposta direta ao remetente
       subject: `[Contato] ${validatedData.subject}`,
       html: `
