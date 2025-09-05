@@ -65,7 +65,7 @@ export default function ContentfulPricingPlans() {
           {plans.map((plan) => (
             <div
               key={plan.sys.id}
-              className={`relative bg-card border border-border/50 rounded-2xl p-8 card-hover ${
+              className={`relative bg-card border border-border/50 rounded-2xl p-8 card-hover flex flex-col justify-between ${
                 plan.fields.isPopular
                   ? 'ring-2 ring-primary-500 shadow-lg scale-105'
                   : ''
@@ -86,14 +86,6 @@ export default function ContentfulPricingPlans() {
                 <p className="text-muted-foreground mb-6">
                   {plan.fields.description}
                 </p>
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-card-foreground">
-                    {plan.fields.currency === 'BRL' ? 'R$' : plan.fields.currency} {plan.fields.price}
-                  </span>
-                  <span className="text-muted-foreground ml-2">
-                    {plan.fields.period}
-                  </span>
-                </div>
               </div>
 
               <div className="space-y-4 mb-8">
@@ -119,15 +111,6 @@ export default function ContentfulPricingPlans() {
               </Link>
             </div>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">
-            Precisa de um plano personalizado?
-          </p>
-          <Link href="/contato" className="btn-outline">
-            Fale com Nossa Equipe
-          </Link>
         </div>
       </div>
     </section>

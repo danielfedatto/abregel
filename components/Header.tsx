@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useSiteSettings } from '@/hooks/use-site-settings';
+import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 import { getImageUrl } from '@/lib/contentful';
 
 const navigation = [
@@ -18,7 +18,7 @@ const navigation = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { settings, loading } = useSiteSettings();
+  const { settings, loading } = useSiteSettingsContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,15 +44,15 @@ export default function Header() {
             {loading ? (
               <div className="h-8 w-32 lg:h-12 lg:w-40 bg-muted-foreground/20 rounded animate-pulse"></div>
             ) : (
-              <img
-                src={
-                  isScrolled 
-                    ? (settings?.logo ? getImageUrl(settings.logo) : "/assets/logo.svg")
-                    : (settings?.logoWhite ? getImageUrl(settings.logoWhite) : "/assets/white_logo.svg")
-                }
-                alt={settings?.siteTitle || "Sindicato Industrial"}
-                className="h-8 w-auto lg:h-12 object-contain transition-all duration-300"
-              />
+                              <img
+                  src={
+                    isScrolled 
+                      ? (settings?.fields?.logo ? getImageUrl(settings.fields.logo) : "/assets/logo.svg")
+                      : (settings?.fields?.logoWhite ? getImageUrl(settings.fields.logoWhite) : "/assets/white_logo.svg")
+                  }
+                  alt={settings?.fields?.siteTitle || "Sindicato Industrial"}
+                  className="h-8 w-auto lg:h-12 object-contain transition-all duration-300"
+                />
             )}
           </Link>
 

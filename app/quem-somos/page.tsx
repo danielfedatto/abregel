@@ -78,40 +78,6 @@ export default function QuemSomos() {
         </div>
       </section>
 
-      {/* Nossa História */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-section">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Nossa História</h2>
-            <p className="section-subtitle mx-auto">
-              Uma trajetória de conquistas e crescimento ao lado da indústria brasileira.
-            </p>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-primary-500"></div>
-            
-            <div className="space-y-8">
-              {timeline.map((item, index) => (
-                <div key={item.year} className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'}`}>
-                    <div className="bg-card p-6 rounded-xl border border-border/50 card-hover ml-12 md:ml-0">
-                      <div className="text-2xl font-bold text-primary mb-2">{item.year}</div>
-                      <h3 className="text-xl font-semibold text-card-foreground mb-2">{item.title}</h3>
-                      <p className="text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-8 h-8 bg-primary rounded-full border-4 border-background flex items-center justify-center">
-                    <Calendar className="h-4 w-4 text-white" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Diretoria */}
       <section id="diretoria" className="section-padding">
         <div className="container-section">

@@ -11,6 +11,7 @@ import ContentfulServices from '@/components/ContentfulServices';
 import ContentfulTestimonials from '@/components/ContentfulTestimonials';
 import ContentfulPricingPlans from '@/components/ContentfulPricingPlans';
 import ContentfulPartners from '@/components/ContentfulPartners';
+import ContentfulNumbersSection from '@/components/ContentfulNumbersSection';
 import ContentfulNews from '@/components/ContentfulNews';
 import ContentfulFAQ from '@/components/ContentfulFAQ';
 import ContentfulCTA from '@/components/ContentfulCTA';
@@ -37,6 +38,9 @@ const Index = () => {
 
       {/* Parcerias Section do Contentful */}
       <ContentfulPartners />
+
+      {/* Números Section do Contentful */}
+      <ContentfulNumbersSection />
 
       {/* Notícias Section do Contentful */}
       <ContentfulNews />

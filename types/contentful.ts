@@ -166,6 +166,25 @@ export interface AboutSection extends ContentfulEntry {
   };
 }
 
+// Tipo para Item de Número
+export interface NumberItem extends ContentfulEntry {
+  fields: {
+    value: string;
+    label: string;
+    order: number;
+  };
+}
+
+// Tipo para Seção de Números
+export interface NumbersSection extends ContentfulEntry {
+  fields: {
+    title: string;
+    subtitle: string;
+    numbers: NumberItem[];
+    order: number;
+  };
+}
+
 // Tipo para Páginas
 export interface Page extends ContentfulEntry {
   fields: {
