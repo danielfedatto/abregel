@@ -223,8 +223,8 @@ export default function HeroSlider() {
                         ) : (
                           <iframe 
                             className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
-                            width="1920"
-                            height="1080"
+                            width="1216"
+                            height="684"
                             src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1`}
                             title={slide.fields.title}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
