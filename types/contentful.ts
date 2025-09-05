@@ -304,3 +304,43 @@ export interface Footer extends ContentfulEntry {
     order: number;
   };
 }
+
+// Tipo para Informações de Contato
+export interface ContactInfo {
+  address: {
+    title: string;
+    value: string;
+    icon: string;
+  };
+  phone: {
+    title: string;
+    value: string;
+    icon: string;
+  };
+  email: {
+    title: string;
+    value: string;
+    icon: string;
+  };
+  hours: {
+    title: string;
+    value: string;
+    icon: string;
+  };
+}
+
+// Tipo para Página de Contato
+export interface ContactPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    subtitle: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    contactInfo: ContactInfo;
+    formTitle: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    emailRecipients: string[]; // Array de e-mails destinatários
+    order: number;
+  };
+}

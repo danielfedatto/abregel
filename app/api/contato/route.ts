@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
+import { createClient } from 'contentful';
 
 // Schema de validação para o formulário de contato
 const contactSchema = z.object({
@@ -17,6 +18,26 @@ export async function POST(request: NextRequest) {
     
     // Validar os dados do formulário
     const validatedData = contactSchema.parse(body);
+    
+    // Buscar e-mails destinatários do Contentful
+    const contentfulClient = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID!,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
+      environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
+    });
+
+    const contactPageResponse = await contentfulClient.getEntries({
+      content_type: '6RLu9FMBw2SudnmlgBl5qf',
+      order: ['fields.order'],
+      limit: 1,
+    });
+
+    let emailRecipients = [process.env.FORM_CONTATO_EMAIL, 'contato@abemf.com.br']; // Fallback
+    
+    if (contactPageResponse.items.length > 0) {
+      const contactPage = contactPageResponse.items[0];
+      emailRecipients = (contactPage.fields.emailRecipients as string[]) || emailRecipients;
+    }
     
     // Verificar se as variáveis de ambiente estão configuradas
     const email = process.env.FORM_CONTATO_EMAIL;
@@ -48,7 +69,7 @@ export async function POST(request: NextRequest) {
     // Preparar o conteúdo do e-mail
     const emailContent = {
       from: `"Site Abregel" <${email}>`,
-      to: [email, 'contato@abemf.com.br'], // Enviar para ambos os e-mails
+      to: emailRecipients, // Usar e-mails do Contentful
       replyTo: validatedData.email, // Permitir resposta direta ao remetente
       subject: `[Contato] ${validatedData.subject}`,
       html: `
