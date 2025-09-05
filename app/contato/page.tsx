@@ -32,22 +32,58 @@ export default function Contato() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simular envio do formulário
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      const response = await fetch('/api/contato', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    toast({
-      title: 'Mensagem enviada com sucesso!',
-      description: 'Entraremos em contato em breve. Obrigado!',
-    });
+      const result = await response.json();
 
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      subject: '',
-      message: ''
-    });
-    setIsSubmitting(false);
+      if (response.ok) {
+        toast({
+          title: 'Mensagem enviada com sucesso!',
+          description: 'Entraremos em contato em breve. Obrigado!',
+        });
+
+        // Limpar o formulário
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        // Tratar erros de validação
+        if (result.details && Array.isArray(result.details)) {
+          const errorMessages = result.details.map((error: any) => error.message).join(', ');
+          toast({
+            title: 'Erro de validação',
+            description: errorMessages,
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Erro ao enviar mensagem',
+            description: result.error || 'Tente novamente mais tarde.',
+            variant: 'destructive',
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      toast({
+        title: 'Erro de conexão',
+        description: 'Verifique sua conexão e tente novamente.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
