@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     // Preparar o conteúdo do e-mail
     const emailContent = {
-      from: `"Sindicato Conecta" <${email}>`,
+      from: `"Site Abregel" <${email}>`,
       to: email, // Enviar para o próprio e-mail configurado
       replyTo: validatedData.email, // Permitir resposta direta ao remetente
       subject: `[Contato] ${validatedData.subject}`,
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
         </div>
       `,
       text: `
-Nova Mensagem de Contato - Sindicato Industrial
+Nova Mensagem de Contato - Site Abregel
 
 Informações do Contato:
 - Nome: ${validatedData.name}
@@ -120,7 +120,7 @@ Mensagem:
 ${validatedData.message}
 
 ---
-Este e-mail foi enviado através do formulário de contato do site Sindicato Conecta.
+Este e-mail foi enviado através do formulário de contato do site Abregel.
 Data: ${new Date().toLocaleString('pt-BR')}
       `,
     };
