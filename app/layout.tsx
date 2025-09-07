@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { Viewport } from 'next'
 import { Montserrat } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { createClient } from 'contentful';
 import Providers from '@/components/Providers';
 import LayoutWrapper from '@/components/LayoutWrapper';
@@ -154,6 +155,7 @@ export default function RootLayout({
         <WhatsAppButton />
         <ScrollToTop />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

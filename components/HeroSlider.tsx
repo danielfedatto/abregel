@@ -181,7 +181,15 @@ export default function HeroSlider() {
                   )}
                 </>
               ) : (
-                <iframe className="aspect-video w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } allowFullScreen/>
+                <iframe 
+                  className="absolute inset-0 w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" 
+                  src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } 
+                  allowFullScreen
+                  style={{ aspectRatio: '16/9' }}
+                  loading="lazy"
+                  width="100%"
+                  height="100%"
+                />
               )}
             </div>
 
@@ -196,7 +204,7 @@ export default function HeroSlider() {
                   {/* Media Content */}
                   <div className="flex justify-center lg:justify-end w-full">
                     <div className="relative w-full max-w-sm md:max-w-md lg:max-w-none mx-auto lg:mx-0">
-                      <div className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
+                      <div className="aspect-[9/16] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
                         {slide.fields.type === 'image' ? (
                           <>
                             {/* Desktop Image */}
@@ -222,9 +230,7 @@ export default function HeroSlider() {
                           </>
                         ) : (
                           <iframe 
-                            className="aspect-[4/5] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
-                            width="1216"
-                            height="684"
+                            className="aspect-[9/16] w-96 h-auto md:w-content md:h-auto rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
                             src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1`}
                             title={slide.fields.title}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
