@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
-import { createClient } from 'contentful';
 
 // Schema de validação para o formulário de contato
 const contactSchema = z.object({
@@ -20,23 +19,30 @@ export async function POST(request: NextRequest) {
     const validatedData = contactSchema.parse(body);
     
     // Buscar e-mails destinatários do Contentful
-    const contentfulClient = createClient({
-      space: process.env.CONTENTFUL_SPACE_ID!,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-      environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
-    });
-
-    const contactPageResponse = await contentfulClient.getEntries({
-      content_type: '6RLu9FMBw2SudnmlgBl5qf',
-      order: ['fields.order'],
-      limit: 1,
-    });
-
     let emailRecipients = [process.env.FORM_CONTATO_EMAIL, 'contato@abemf.com.br']; // Fallback
     
-    if (contactPageResponse.items.length > 0) {
-      const contactPage = contactPageResponse.items[0];
-      emailRecipients = (contactPage.fields.emailRecipients as string[]) || emailRecipients;
+    try {
+      if (process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN) {
+        const { createClient } = await import('contentful');
+        const contentfulClient = createClient({
+          space: process.env.CONTENTFUL_SPACE_ID,
+          accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+          environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
+        });
+
+        const contactPageResponse = await contentfulClient.getEntries({
+          content_type: '6RLu9FMBw2SudnmlgBl5qf',
+          order: ['fields.order'],
+          limit: 1,
+        });
+        
+        if (contactPageResponse.items.length > 0) {
+          const contactPage = contactPageResponse.items[0];
+          emailRecipients = (contactPage.fields.emailRecipients as string[]) || emailRecipients;
+        }
+      }
+    } catch (contentfulError) {
+      console.warn('Erro ao buscar e-mails do Contentful, usando fallback:', contentfulError);
     }
     
     // Verificar se as variáveis de ambiente estão configuradas
