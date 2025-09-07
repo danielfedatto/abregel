@@ -3,7 +3,6 @@ import type { Viewport } from 'next'
 import { Montserrat } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { createClient } from 'contentful';
 import Providers from '@/components/Providers';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { SiteSettingsProvider } from '@/contexts/SiteSettingsContext';
@@ -18,15 +17,20 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-// Configuração do cliente Contentful
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-});
-
 // Função para gerar metadata dinâmica
 export async function generateMetadata(): Promise<Metadata> {
   try {
+    // Verificar se as variáveis de ambiente estão disponíveis
+    if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+      throw new Error('Variáveis de ambiente do Contentful não encontradas');
+    }
+
+    const { createClient } = await import('contentful');
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    });
+
     const entries = await client.getEntries({
       content_type: 'siteSettings',
       limit: 1,

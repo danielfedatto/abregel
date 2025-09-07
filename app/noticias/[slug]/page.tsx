@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { createClient } from 'contentful';
 import { NewsPost } from '@/types/contentful';
 import { extractRichText, getImageUrl } from '@/lib/contentful';
 import { Calendar, User, Tag, ArrowLeft } from 'lucide-react';
@@ -7,12 +6,6 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import Header from '@/components/Header';
 import ContentfulFooter from '@/components/ContentfulFooter';
-
-// Configuração do cliente Contentful
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-});
 
 interface NewsPostPageProps {
   params: Promise<{
@@ -23,6 +16,17 @@ interface NewsPostPageProps {
 // Função para buscar o post pelo slug
 async function getNewsPost(slug: string): Promise<NewsPost | null> {
   try {
+    // Verificar se as variáveis de ambiente estão disponíveis
+    if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+      throw new Error('Variáveis de ambiente do Contentful não encontradas');
+    }
+
+    const { createClient } = await import('contentful');
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    });
+
     const entries = await client.getEntries({
       content_type: 'newsPost',
       'fields.slug': slug,
@@ -79,6 +83,17 @@ export async function generateMetadata({ params }: NewsPostPageProps): Promise<M
 // Função para gerar paths estáticos (opcional, para melhor performance)
 export async function generateStaticParams() {
   try {
+    // Verificar se as variáveis de ambiente estão disponíveis
+    if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+      return [];
+    }
+
+    const { createClient } = await import('contentful');
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    });
+
     const entries = await client.getEntries({
       content_type: 'newsPost',
       limit: 1000,
