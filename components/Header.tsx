@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 import { getImageUrl } from '@/lib/contentful';
 
 const navigation = [
   { name: 'Quem Somos', href: '/quem-somos' },
   { name: 'Serviços', href: '/servicos' },
-  { name: 'Parcerias', href: '/parcerias' },
+  { name: 'Parceria FIESP', href: '/parcerias' },
   { name: 'Notícias', href: '/noticias' },
   { name: 'Contato', href: '/contato' },
 ];
@@ -87,6 +87,7 @@ export default function Header() {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
+                <SheetTitle className="sr-only">Menu de Navegação</SheetTitle>
                 <div className="flex flex-col space-y-6 mt-8">
                   {navigation.map((item) => (
                     <Link

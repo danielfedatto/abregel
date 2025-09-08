@@ -182,13 +182,10 @@ export default function HeroSlider() {
                 </>
               ) : (
                 <iframe 
-                  className="absolute inset-0 w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" 
+                  className="absolute aspect-video inset-0 w-auto h-screen lg:size-max object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" 
                   src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } 
                   allowFullScreen
-                  style={{ aspectRatio: '16/9' }}
                   loading="lazy"
-                  width="100%"
-                  height="100%"
                 />
               )}
             </div>
@@ -203,8 +200,8 @@ export default function HeroSlider() {
 
                   {/* Media Content */}
                   <div className="flex justify-center lg:justify-end w-full">
-                    <div className="relative w-full max-w-sm md:max-w-md lg:max-w-none mx-auto lg:mx-0">
-                      <div className="aspect-[9/16] md:aspect-video rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
+                    <div className="relative w-full max-w-sm md:max-w-2xl lg:max-w-none mx-auto lg:mx-0">
+                      <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm">
                         {slide.fields.type === 'image' ? (
                           <>
                             {/* Desktop Image */}
@@ -218,7 +215,7 @@ export default function HeroSlider() {
                               <img
                                 src={getImageUrl(slide.fields.imageMobile)}
                                 alt={slide.fields.title}
-                                className="block md:hidden w-full h-full object-cover"
+                                className="aspect-[9/16] block md:hidden w-full h-full object-cover"
                               />
                             ) : (
                               <img
@@ -230,11 +227,12 @@ export default function HeroSlider() {
                           </>
                         ) : (
                           <iframe 
-                            className="aspect-[9/16] w-96 h-auto md:w-content md:h-auto rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
+                            className="aspect-video oject-cover w-full h-auto md:w-[1200px] md:max-w-2xl lg:max-w-none rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
                             src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1`}
                             title={slide.fields.title}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            loading="lazy"
                             />
                         )}
                       </div>

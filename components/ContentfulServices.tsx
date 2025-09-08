@@ -23,7 +23,7 @@ import {
 
 export default function ContentfulServices() {
   const { data: services, loading, error } = useContentful<Service>('service', {
-    limit: 6,
+    limit: 3,
     order: ['fields.order'],
   });
 
@@ -61,7 +61,7 @@ export default function ContentfulServices() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(3)].map((_, i) => (
               <div key={i} className="bg-white rounded-lg shadow-md p-6 animate-pulse">
                 <div className="h-12 w-12 bg-gray-300 rounded-lg mb-4"></div>
                 <div className="h-6 bg-gray-300 rounded mb-2"></div>
@@ -152,6 +152,12 @@ export default function ContentfulServices() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link href="/servicos" className="btn-outline">
+            Ver Todos os Serviços
+          </Link>
         </div>
       </div>
     </section>
