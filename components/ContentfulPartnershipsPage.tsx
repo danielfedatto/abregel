@@ -41,7 +41,7 @@ export default function ContentfulPartnershipsPage() {
                   className="bg-card rounded-xl border border-border/50 p-6 animate-pulse"
                 >
                   <div className="flex items-center mb-4">
-                    <div className="w-16 h-16 bg-muted rounded-lg mr-4"></div>
+                    <div className="w-40 h-24 bg-muted rounded-lg mr-4"></div>
                     <div className="flex-1">
                       <div className="h-5 bg-muted rounded-lg mb-2"></div>
                       <div className="h-4 bg-muted rounded-lg w-3/4"></div>
@@ -114,7 +114,7 @@ export default function ContentfulPartnershipsPage() {
               >
                 <div className="flex items-center mb-4">
                   {partner.fields.logo ? (
-                    <div className="w-16 h-16 bg-muted rounded-lg mr-4 flex items-center justify-center overflow-hidden">
+                    <div className="w-40 h-24 bg-muted rounded-lg mr-4 flex items-center justify-center overflow-hidden">
                       <img
                         src={getImageUrl(partner.fields.logo)}
                         alt={partner.fields.name}
@@ -122,8 +122,8 @@ export default function ContentfulPartnershipsPage() {
                       />
                     </div>
                   ) : (
-                    <div className="w-16 h-16 bg-muted rounded-lg mr-4 flex items-center justify-center">
-                      <Building className="h-8 w-8 text-muted-foreground" />
+                    <div className="w-40 h-24 bg-muted rounded-lg mr-4 flex items-center justify-center">
+                      <Building className="h-12 w-12 text-muted-foreground" />
                     </div>
                   )}
                   <div className="flex-1">
