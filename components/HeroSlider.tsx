@@ -160,14 +160,16 @@ export default function HeroSlider() {
                   {/* Desktop Image */}
                   <img
                     src={getImageUrl(slide.fields.image)}
-                    alt={slide.fields.title}
+                    alt=""
+                    role="presentation"
                     className="hidden md:block w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                   />
                   {/* Mobile Image */}
                   {slide.fields.imageMobile && (
                     <img
                       src={getImageUrl(slide.fields.imageMobile)}
-                      alt={slide.fields.title}
+                      alt=""
+                      role="presentation"
                       className="block md:hidden w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                     />
                   )}
@@ -175,7 +177,8 @@ export default function HeroSlider() {
                   {!slide.fields.imageMobile && (
                     <img
                       src={getImageUrl(slide.fields.image)}
-                      alt={slide.fields.title}
+                      alt=""
+                      role="presentation"
                       className="block md:hidden w-full h-full object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75"
                     />
                   )}
@@ -184,6 +187,7 @@ export default function HeroSlider() {
                 <iframe 
                   className="absolute aspect-video inset-0 w-auto h-screen lg:size-max object-cover scale-110 md:scale-125 blur-xl md:blur-3xl brightness-75" 
                   src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0` } 
+                  title={`Vídeo de fundo do slide: ${slide.fields.title || `Slide ${index + 1}`}`}
                   allowFullScreen
                   loading="lazy"
                 />
@@ -207,20 +211,20 @@ export default function HeroSlider() {
                             {/* Desktop Image */}
                             <img
                               src={getImageUrl(slide.fields.image)}
-                              alt={slide.fields.title}
+                              alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
                               className="hidden md:block w-full h-full object-cover"
                             />
                             {/* Mobile Image */}
                             {slide.fields.imageMobile ? (
                               <img
                                 src={getImageUrl(slide.fields.imageMobile)}
-                                alt={slide.fields.title}
+                                alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
                                 className="aspect-[9/16] block md:hidden w-full h-full object-cover"
                               />
                             ) : (
                               <img
                                 src={getImageUrl(slide.fields.image)}
-                                alt={slide.fields.title}
+                                alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
                                 className="block md:hidden w-full h-full object-cover"
                               />
                             )}
@@ -229,7 +233,7 @@ export default function HeroSlider() {
                           <iframe 
                             className="aspect-video oject-cover w-full h-auto md:w-[1200px] md:max-w-2xl lg:max-w-none rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl bg-white/10 backdrop-blur-sm" 
                             src={`https://www.youtube.com/embed/${getVideoId(slide.fields.video as any)}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1`}
-                            title={slide.fields.title}
+                            title={slide.fields.title || `Vídeo do slide ${index + 1}`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             loading="lazy"

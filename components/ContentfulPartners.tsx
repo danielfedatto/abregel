@@ -71,7 +71,7 @@ export default function ContentfulPartners() {
           {partners.map((partner) => (
             <div 
               key={partner.sys.id}
-              className="flex items-center justify-center p-6 bg-card rounded-xl border border-border/50 opacity-70 hover:opacity-100 transition-opacity duration-300 card-hover"
+              className="flex items-center justify-center p-6 bg-card rounded-xl border border-border/50 opacity-90 hover:opacity-100 transition-opacity duration-300 card-hover"
             >
               <div className="text-center">
                 {partner.fields.logo ? (
@@ -87,7 +87,7 @@ export default function ContentfulPartners() {
                     <Building className="h-12 w-12 text-muted-foreground" />
                   </div>
                 )}
-                <span className="text-sm font-medium text-muted-foreground">{partner.fields.name}</span>
+                <span className="text-sm font-medium text-foreground">{partner.fields.name}</span>
               </div>
             </div>
           ))}

@@ -274,7 +274,7 @@ export default function ContentfulContactPage({ className = '' }: ContentfulCont
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Localização da ABREGEL"
+                    title="Mapa interativo mostrando a localização da ABREGEL"
                   />
                 </div>
               </div>
