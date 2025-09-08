@@ -1,11 +1,29 @@
 import { createClient } from 'contentful';
 
+// Função para criar cliente Contentful com validação
+function createContentfulClient() {
+  const spaceId = process.env.CONTENTFUL_SPACE_ID;
+  const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
+  const environment = process.env.CONTENTFUL_ENVIRONMENT || 'master';
+
+  if (!spaceId || !accessToken) {
+    console.warn('Variáveis de ambiente do Contentful não encontradas');
+    // Retorna um cliente mock para evitar erros durante o build
+    return {
+      getEntries: () => Promise.resolve({ items: [] }),
+      getEntry: () => Promise.resolve(null),
+    } as any;
+  }
+
+  return createClient({
+    space: spaceId,
+    accessToken: accessToken,
+    environment: environment,
+  });
+}
+
 // Configuração do cliente Contentful
-export const contentfulClient = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
-});
+export const contentfulClient = createContentfulClient();
 
 // Tipos para os campos do Contentful
 export interface ContentfulImage {

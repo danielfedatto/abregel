@@ -3,7 +3,6 @@ import type { Viewport } from 'next'
 import { Montserrat } from 'next/font/google';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { createClient } from 'contentful';
 import Providers from '@/components/Providers';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { SiteSettingsProvider } from '@/contexts/SiteSettingsContext';
@@ -18,15 +17,20 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-// Configuração do cliente Contentful
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-});
-
 // Função para gerar metadata dinâmica
 export async function generateMetadata(): Promise<Metadata> {
   try {
+    // Verificar se as variáveis de ambiente estão disponíveis
+    if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+      throw new Error('Variáveis de ambiente do Contentful não encontradas');
+    }
+
+    const { createClient } = await import('contentful');
+    const client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+    });
+
     const entries = await client.getEntries({
       content_type: 'siteSettings',
       limit: 1,
@@ -35,17 +39,17 @@ export async function generateMetadata(): Promise<Metadata> {
     if (entries.items.length === 0) {
       // Fallback para metadata estática
       return {
-        title: 'Sindicato Industrial - Fortalecendo o Setor Há 35 Anos',
-        description: 'Representamos e defendemos os interesses do setor industrial brasileiro, promovendo desenvolvimento sustentável e competitividade empresarial.',
-        keywords: 'sindicato, industrial, representação, empresas, desenvolvimento, sustentabilidade',
-        authors: [{ name: 'Sindicato Industrial' }],
+        title: 'Abregel',
+        description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
+        keywords: 'associação, associação brasileira, representação, empresas, desenvolvimento, sustentabilidade, abregel, congelados, supercongelados, sorvetes, concentrados, liofilizados, gelo, bebidas',
+        authors: [{ name: 'Daniel Fedatto' }],
         openGraph: {
-          title: 'Sindicato Industrial',
-          description: 'Fortalecendo o setor industrial brasileiro há mais de 35 anos',
+          title: 'Abregel',
+          description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
           type: 'website',
           locale: 'pt_BR',
         },
-        applicationName: 'Sindicato Industrial',
+        applicationName: 'Abregel',
         manifest: '/site.webmanifest',
         icons: {
           icon: [
@@ -78,13 +82,13 @@ export async function generateMetadata(): Promise<Metadata> {
     }
 
     const settings = entries.items[0] as any;
-    const siteTitle = settings.fields.siteTitle || 'Sindicato Industrial';
-    const siteDescription = settings.fields.siteDescription || 'Representamos e defendemos os interesses do setor industrial brasileiro.';
+    const siteTitle = settings.fields.siteTitle || 'Abregel';
+    const siteDescription = settings.fields.siteDescription || 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.';
 
     return {
       title: siteTitle,
       description: siteDescription,
-      keywords: 'sindicato, industrial, representação, empresas, desenvolvimento, sustentabilidade',
+      keywords: 'associação, associação brasileira, representação, empresas, desenvolvimento, sustentabilidade, abregel, congelados, supercongelados, sorvetes, concentrados, liofilizados, gelo, bebidas',
       authors: [{ name: siteTitle }],
       openGraph: {
         title: siteTitle,
@@ -126,8 +130,8 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error('Erro ao gerar metadata:', error);
     // Fallback para metadata estática em caso de erro
     return {
-      title: 'Sindicato Industrial - Fortalecendo o Setor Há 35 Anos',
-      description: 'Representamos e defendemos os interesses do setor industrial brasileiro, promovendo desenvolvimento sustentável e competitividade empresarial.',
+      title: 'Abregel',
+      description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
     };
   }
 }

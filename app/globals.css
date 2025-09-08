@@ -11,7 +11,7 @@
     /* Paleta institucional do sindicato - Ajustada para melhor contraste */
     --primary-900: 207 81% 17%;     /* #0F4379 - Mantido para fundos escuros */
     --primary-700: 212 62% 44%;     /* #306BB3 - Mantido para fundos claros */
-    --primary-500: 197 75% 45%;     /* #2A8BC7 - Escurecido para melhor contraste */
+    --primary-500: 207 81% 25%;     /* #1A4A6B - Escurecido para melhor contraste WCAG AA */
     --accent-400: 189 54% 45%;      /* #4A9BA8 - Escurecido para melhor contraste */
     --muted-400: 0 0% 45%;          /* #737373 - Escurecido para melhor contraste */
 
@@ -32,7 +32,7 @@
     --secondary-foreground: 207 81% 17%;
     
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 35%;  /* Escurecido para melhor contraste */
+    --muted-foreground: 0 0% 25%;  /* Escurecido para melhor contraste WCAG AA */
     
     --accent: 189 54% 45%;          /* Escurecido para melhor contraste */
     --accent-foreground: 207 81% 17%;
