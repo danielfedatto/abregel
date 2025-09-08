@@ -9,6 +9,7 @@ const STORAGE_KEY = "newsletter_modal_dismissed";
 
 export default function NewsletterModal() {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function NewsletterModal() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: integrate with backend or newsletter provider
+    console.log('Newsletter subscription:', { name, email });
     handleClose();
   };
 
@@ -48,6 +50,13 @@ export default function NewsletterModal() {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="mt-4 space-y-3">
+          <Input
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Seu nome"
+          />
           <Input
             type="email"
             required

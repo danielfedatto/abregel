@@ -112,7 +112,7 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
       <Header />
       
       {/* Header da página */}
-      <div className="relative py-16 pt-32 overflow-hidden">
+      <div className="relative py-12 md:py-16 pt-24 md:pt-32 overflow-hidden">
         {/* Imagem de fundo com blur */}
         <div className="absolute inset-0">
           {post.fields.featuredImage ? (
@@ -132,20 +132,20 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
         {/* Conteúdo do header */}
         <div className="relative z-10 container-section">
             {/* Breadcrumb */}
-            <nav className="mb-8">
+            <nav className="mb-6 md:mb-8">
               <Link 
                 href="/noticias" 
-                className="inline-flex items-center text-white/80 hover:text-white transition-colors duration-300"
+                className="inline-flex items-center text-white/80 hover:text-white transition-colors duration-300 text-sm md:text-base"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
+                <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 Voltar para Notícias
               </Link>
             </nav>
 
             {/* Categoria */}
             {post.fields.category && (
-              <div className="mb-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/20 text-white backdrop-blur-sm border border-white/30">
+              <div className="mb-3 md:mb-4">
+                <span className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-white/20 text-white backdrop-blur-sm border border-white/30">
                   <Tag className="h-3 w-3 mr-1" />
                   {post.fields.category}
                 </span>
@@ -153,24 +153,24 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
             )}
 
             {/* Título */}
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight drop-shadow-lg">
               {post.fields.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-xl text-white/90 mb-8 leading-relaxed drop-shadow-md">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-8 leading-relaxed drop-shadow-md">
               {post.fields.excerpt}
             </p>
 
             {/* Meta informações */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-white/80">
+            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-xs sm:text-sm text-white/80">
               <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2" />
+                <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 {publishDate}
               </div>
               {post.fields.author && (
                 <div className="flex items-center">
-                  <User className="h-4 w-4 mr-2" />
+                  <User className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                   {post.fields.author}
                 </div>
               )}
@@ -179,26 +179,26 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
       </div>
 
       {/* Conteúdo principal */}
-      <div className="py-16">
+      <div className="py-8 md:py-16">
         <div className="container-section">
             {/* Imagem destacada */}
-            <div className="mb-12">
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+            <div className="mb-8 md:mb-12">
+              <div className="relative overflow-hidden rounded-xl md:rounded-2xl shadow-2xl">
                 {post.fields.featuredImage ? (
                   <img
                     src={getImageUrl(post.fields.featuredImage)}
                     alt={post.fields.title}
-                    className="w-full h-64 md:h-96 lg:h-[500px] object-cover transition-transform duration-300 hover:scale-105"
+                    className="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] object-cover transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
-                  <div className="w-full h-64 md:h-96 lg:h-[500px] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                  <div className="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-6 h-6 sm:w-8 sm:h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
                       </div>
-                      <p className="text-muted-foreground font-medium">Imagem da Notícia</p>
+                      <p className="text-muted-foreground font-medium text-sm sm:text-base">Imagem da Notícia</p>
                     </div>
                   </div>
                 )}
@@ -207,24 +207,29 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
             </div>
 
             {/* Conteúdo do post */}
-            <article className="prose prose-lg max-w-none">
+            <article className="prose prose-sm sm:prose-base md:prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
               <div 
                 dangerouslySetInnerHTML={{ 
                   __html: extractRichText(post.fields.content) 
                 }} 
-                className="text-foreground leading-relaxed"
+                className="text-foreground leading-relaxed break-words overflow-wrap-anywhere"
+                style={{
+                  wordBreak: 'break-word',
+                  overflowWrap: 'anywhere',
+                  hyphens: 'auto'
+                }}
               />
             </article>
 
             {/* Tags */}
             {post.fields.tags && post.fields.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-border">
-                <h3 className="text-lg font-semibold mb-4">Tags</h3>
+              <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-border">
+                <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {post.fields.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm"
+                      className="px-2 sm:px-3 py-1 bg-muted text-muted-foreground rounded-full text-xs sm:text-sm"
                     >
                       {tag}
                     </span>
@@ -234,12 +239,12 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
             )}
 
             {/* Navegação */}
-            <div className="mt-12 pt-8 border-t border-border">
+            <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-border">
               <Link 
                 href="/noticias" 
-                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300"
+                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300 text-sm md:text-base"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
+                <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                 Ver todas as notícias
               </Link>
             </div>
