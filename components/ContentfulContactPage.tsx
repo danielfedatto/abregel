@@ -266,9 +266,16 @@ export default function ContentfulContactPage({ className = '' }: ContentfulCont
               </div>
 
               {/* Mapa */}
-              <div className="mt-8 aspect-video bg-muted rounded-2xl border border-border/50 flex items-center justify-center">
-                <div className="text-center">
-                  <iframe className='rounded-2xl border border-border/50 shadow-xl shadow-primary/10 grayscale' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1664.387793682233!2d-46.69232494861386!3d-23.57094676574052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce570f44dd4193%3A0xcc3f94c9a245af7a!2sABREGEL!5e0!3m2!1spt-BR!2sbr!4v1757114115778!5m2!1spt-BR!2sbr" width="600" height="450" loading="lazy"/>
+              <div className="mt-8">
+                <div className="relative w-full aspect-video bg-muted rounded-2xl border border-border/50 overflow-hidden shadow-xl shadow-primary/10">
+                  <iframe 
+                    className="absolute inset-0 w-full h-full grayscale hover:grayscale-0 transition-all duration-300"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1664.387793682233!2d-46.69232494861386!3d-23.57094676574052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce570f44dd4193%3A0xcc3f94c9a245af7a!2sABREGEL!5e0!3m2!1spt-BR!2sbr!4v1757114115778!5m2!1spt-BR!2sbr" 
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localização da ABREGEL"
+                  />
                 </div>
               </div>
             </div>
