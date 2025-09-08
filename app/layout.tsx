@@ -39,17 +39,17 @@ export async function generateMetadata(): Promise<Metadata> {
     if (entries.items.length === 0) {
       // Fallback para metadata estática
       return {
-        title: 'Sindicato Industrial - Fortalecendo o Setor Há 35 Anos',
-        description: 'Representamos e defendemos os interesses do setor industrial brasileiro, promovendo desenvolvimento sustentável e competitividade empresarial.',
-        keywords: 'sindicato, industrial, representação, empresas, desenvolvimento, sustentabilidade',
-        authors: [{ name: 'Sindicato Industrial' }],
+        title: 'Abregel',
+        description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
+        keywords: 'associação, associação brasileira, representação, empresas, desenvolvimento, sustentabilidade, abregel, congelados, supercongelados, sorvetes, concentrados, liofilizados, gelo, bebidas',
+        authors: [{ name: 'Daniel Fedatto' }],
         openGraph: {
-          title: 'Sindicato Industrial',
-          description: 'Fortalecendo o setor industrial brasileiro há mais de 35 anos',
+          title: 'Abregel',
+          description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
           type: 'website',
           locale: 'pt_BR',
         },
-        applicationName: 'Sindicato Industrial',
+        applicationName: 'Abregel',
         manifest: '/site.webmanifest',
         icons: {
           icon: [
@@ -82,13 +82,13 @@ export async function generateMetadata(): Promise<Metadata> {
     }
 
     const settings = entries.items[0] as any;
-    const siteTitle = settings.fields.siteTitle || 'Sindicato Industrial';
-    const siteDescription = settings.fields.siteDescription || 'Representamos e defendemos os interesses do setor industrial brasileiro.';
+    const siteTitle = settings.fields.siteTitle || 'Abregel';
+    const siteDescription = settings.fields.siteDescription || 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.';
 
     return {
       title: siteTitle,
       description: siteDescription,
-      keywords: 'sindicato, industrial, representação, empresas, desenvolvimento, sustentabilidade',
+      keywords: 'associação, associação brasileira, representação, empresas, desenvolvimento, sustentabilidade, abregel, congelados, supercongelados, sorvetes, concentrados, liofilizados, gelo, bebidas',
       authors: [{ name: siteTitle }],
       openGraph: {
         title: siteTitle,
@@ -130,8 +130,8 @@ export async function generateMetadata(): Promise<Metadata> {
     console.error('Erro ao gerar metadata:', error);
     // Fallback para metadata estática em caso de erro
     return {
-      title: 'Sindicato Industrial - Fortalecendo o Setor Há 35 Anos',
-      description: 'Representamos e defendemos os interesses do setor industrial brasileiro, promovendo desenvolvimento sustentável e competitividade empresarial.',
+      title: 'Abregel',
+      description: 'Associação Brasileira das Empresas de Alimentos, Congelados, Supercongelados, Sorvetes, Concentrados, Liofilizados, Gelo e Bebidas.',
     };
   }
 }
