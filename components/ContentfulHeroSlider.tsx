@@ -85,11 +85,27 @@ export default function ContentfulHeroSlider() {
             <div className="relative w-full h-full">
               {/* Imagem de fundo */}
               <div className="absolute inset-0">
-                <img
-                  src={getImageUrl(slide.fields.image)}
-                  alt={slide.fields.title}
-                  className="w-full h-full object-cover"
-                />
+                {slide.fields.imageLink ? (
+                  <a
+                    href={slide.fields.imageLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full"
+                    aria-label={`Ir para ${slide.fields.title}`}
+                  >
+                    <img
+                      src={getImageUrl(slide.fields.image)}
+                      alt={slide.fields.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={getImageUrl(slide.fields.image)}
+                    alt={slide.fields.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 {/* Overlay escuro */}
                 <div className="absolute inset-0 bg-black/40" />
               </div>
@@ -130,7 +146,7 @@ export default function ContentfulHeroSlider() {
 
       {/* Botões de navegação */}
       <button
-        className="swiper-button-prev absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-all duration-300"
+        className="swiper-button-prev absolute left-4 top-1/2 transform-translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-all duration-300"
         aria-label="Slide anterior"
         title="Slide anterior"
       >
@@ -141,7 +157,7 @@ export default function ContentfulHeroSlider() {
       </button>
 
       <button
-        className="swiper-button-next absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-all duration-300"
+        className="swiper-button-next absolute right-4 top-1/2 transform-translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-all duration-300"
         aria-label="Próximo slide"
         title="Próximo slide"
       >
