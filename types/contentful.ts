@@ -33,6 +33,7 @@ export interface HeroSlide extends ContentfulEntry {
     type: 'image' | 'video';
     ctaText?: string;
     ctaLink?: string;
+    imageLink?: string; // Link para a imagem do slide
     order: number;
   };
 }

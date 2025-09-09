@@ -209,24 +209,72 @@ export default function HeroSlider() {
                         {slide.fields.type === 'image' ? (
                           <>
                             {/* Desktop Image */}
-                            <img
-                              src={getImageUrl(slide.fields.image)}
-                              alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
-                              className="hidden md:block w-full h-full object-cover"
-                            />
-                            {/* Mobile Image */}
-                            {slide.fields.imageMobile ? (
-                              <img
-                                src={getImageUrl(slide.fields.imageMobile)}
-                                alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
-                                className="aspect-[9/16] block md:hidden w-full h-full object-cover"
-                              />
+                            {slide.fields.imageLink ? (
+                              <a
+                                href={slide.fields.imageLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block"
+                                aria-label={`Ir para ${slide.fields.title || `Slide ${index + 1}`}`}
+                              >
+                                <img
+                                  src={getImageUrl(slide.fields.image)}
+                                  alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
+                                  className="hidden md:block w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                />
+                              </a>
                             ) : (
                               <img
                                 src={getImageUrl(slide.fields.image)}
                                 alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
-                                className="block md:hidden w-full h-full object-cover"
+                                className="hidden md:block w-full h-full object-cover"
                               />
+                            )}
+                            {/* Mobile Image */}
+                            {slide.fields.imageMobile ? (
+                              slide.fields.imageLink ? (
+                                <a
+                                  href={slide.fields.imageLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block"
+                                  aria-label={`Ir para ${slide.fields.title || `Slide ${index + 1}`}`}
+                                >
+                                  <img
+                                    src={getImageUrl(slide.fields.imageMobile)}
+                                    alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
+                                    className="aspect-[9/16] block md:hidden w-auto h-9/10 object-cover hover:scale-105 transition-transform duration-300"
+                                  />
+                                </a>
+                              ) : (
+                                <img
+                                  src={getImageUrl(slide.fields.imageMobile)}
+                                  alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
+                                  className="aspect-[9/16] block md:hidden w-auto h-9/10 object-cover"
+                                />
+                              )
+                            ) : (
+                              slide.fields.imageLink ? (
+                                <a
+                                  href={slide.fields.imageLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block"
+                                  aria-label={`Ir para ${slide.fields.title || `Slide ${index + 1}`}`}
+                                >
+                                  <img
+                                    src={getImageUrl(slide.fields.image)}
+                                    alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
+                                    className="block md:hidden w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                  />
+                                </a>
+                              ) : (
+                                <img
+                                  src={getImageUrl(slide.fields.image)}
+                                  alt={slide.fields.title || `Slide ${index + 1} do carrossel`}
+                                  className="block md:hidden w-full h-full object-cover"
+                                />
+                              )
                             )}
                           </>
                         ) : (
@@ -291,7 +339,7 @@ export default function HeroSlider() {
           @media (min-width: 768px) {
             .swiper-pagination { gap: 12px; }
           }
-          .swiper-pagination-bullets { bottom: 1rem !important; }
+          .swiper-pagination-bullets { bottom: 7rem !important; }
           .swiper-pagination-bullet { position: relative; width: 40px; height: 3px; border-radius: 9999px; background: rgba(255,255,255,0.35); overflow: hidden; cursor: pointer; opacity: 1; padding: 0; }
           
           @media (min-width: 768px) {
