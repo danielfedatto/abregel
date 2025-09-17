@@ -379,3 +379,17 @@ export interface PartnershipsPage extends ContentfulEntry {
     order: number;
   };
 }
+
+// Tipo para Página Dinâmica
+export interface DynamicPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    slug: string;
+    excerpt?: string;
+    featuredImage?: ContentfulImage;
+    content: any; // Rich Text
+    seoTitle?: string;
+    seoDescription?: string;
+    order: number;
+  };
+}

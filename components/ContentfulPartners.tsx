@@ -92,12 +92,6 @@ export default function ContentfulPartners() {
             </div>
           ))}
         </div>
-
-        <div className="text-center mt-12">
-          <Link href="/parcerias" className="btn-outline">
-            Conheça Todas as Parcerias
-          </Link>
-        </div>
       </div>
     </section>
   );
