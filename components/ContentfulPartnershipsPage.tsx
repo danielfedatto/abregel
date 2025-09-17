@@ -1,16 +1,54 @@
 'use client';
 
 import { useContentful } from '@/hooks/use-contentful';
-import { Partner } from '@/types/contentful';
+import { Partner, PartnershipsPage } from '@/types/contentful';
 import { getImageUrl } from '@/lib/contentful';
-import { Building, ExternalLink, Globe } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { 
+  Building, 
+  ExternalLink, 
+  Globe,
+  Handshake,
+  Target,
+  Users,
+  Award,
+  Briefcase,
+  Star,
+  ChevronRight,
+  CheckCircle
+} from 'lucide-react';
 import Link from 'next/link';
 
 export default function ContentfulPartnershipsPage() {
-  const { data: partners, loading, error } = useContentful<Partner>('partner', {
+  const { data: partners, loading: partnersLoading, error: partnersError } = useContentful<Partner>('partner', {
     limit: 20,
     order: ['fields.order'],
   });
+
+  const { data: pageData, loading: pageLoading, error: pageError } = useContentful<PartnershipsPage>('3D7Q815yu5Ap3Ukov8frF3', {
+    limit: 1,
+    order: ['fields.order'],
+  });
+
+  const loading = partnersLoading || pageLoading;
+  const error = partnersError || pageError;
+
+  // Função para mapear nomes de ícones para componentes
+  const getIconComponent = (iconName: string) => {
+    const iconMap: Record<string, React.ComponentType<any>> = {
+      building: Building,
+      handshake: Handshake,
+      target: Target,
+      users: Users,
+      award: Award,
+      briefcase: Briefcase,
+      star: Star,
+      globe: Globe,
+    };
+    
+    const IconComponent = iconMap[iconName.toLowerCase()] || Building;
+    return <IconComponent className="w-8 h-8" />;
+  };
 
   if (loading) {
     return (
@@ -36,19 +74,11 @@ export default function ContentfulPartnershipsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
-                <div 
-                  key={i}
-                  className="bg-card rounded-xl border border-border/50 p-6 animate-pulse"
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="w-40 h-24 bg-muted rounded-lg mr-4"></div>
-                    <div className="flex-1">
-                      <div className="h-5 bg-muted rounded-lg mb-2"></div>
-                      <div className="h-4 bg-muted rounded-lg w-3/4"></div>
-                    </div>
-                  </div>
+                <div key={i} className="bg-card rounded-xl border border-border/50 p-6 animate-pulse">
+                  <div className="w-16 h-16 bg-muted rounded-lg mb-4"></div>
+                  <div className="h-6 bg-muted rounded-lg mb-2"></div>
                   <div className="h-4 bg-muted rounded-lg mb-2"></div>
-                  <div className="h-4 bg-muted rounded-lg w-2/3"></div>
+                  <div className="h-4 bg-muted rounded-lg w-3/4"></div>
                 </div>
               ))}
             </div>
@@ -65,10 +95,10 @@ export default function ContentfulPartnershipsPage() {
           <div className="container-section">
             <div className="text-center">
               <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-                Nossas Parcerias
+                {pageData?.[0]?.fields?.heroTitle || 'Nossas Parcerias'}
               </h1>
               <p className="text-xl text-white/90 max-w-3xl mx-auto">
-                Nenhum parceiro encontrado. Verifique o Contentful.
+                {pageData?.[0]?.fields?.heroDescription || 'Nenhum parceiro encontrado. Verifique o Contentful.'}
               </p>
             </div>
           </div>
@@ -84,12 +114,10 @@ export default function ContentfulPartnershipsPage() {
         <div className="container-section">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Nossas Parcerias
+              {pageData?.[0]?.fields?.heroTitle || 'Nossas Parcerias'}
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Trabalhamos em conjunto com empresas e organizações de referência 
-              para oferecer ainda mais valor aos nossos associados e fortalecer 
-              o setor industrial brasileiro.
+              {pageData?.[0]?.fields?.heroDescription || 'Trabalhamos em conjunto com empresas e organizações de referência para oferecer ainda mais valor aos nossos associados e fortalecer o setor industrial brasileiro.'}
             </p>
           </div>
         </div>
@@ -99,146 +127,74 @@ export default function ContentfulPartnershipsPage() {
       <section className="section-padding">
         <div className="container-section">
           <div className="text-center mb-12">
-            <h2 className="section-title">Conheça Nossos Parceiros</h2>
+            <h2 className="section-title">
+              {pageData?.[0]?.fields?.sectionTitle || 'Conheça Nossos Parceiros'}
+            </h2>
             <p className="section-subtitle mx-auto">
-              Empresas e organizações que compartilham nossa visão de 
-              desenvolvimento sustentável e inovação no setor industrial.
+              {pageData?.[0]?.fields?.sectionDescription || 'Empresas e organizações que compartilham nossa visão de desenvolvimento sustentável e inovação no setor industrial.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {partners.map((partner) => (
-              <div 
-                key={partner.sys.id}
-                className="bg-card rounded-xl border border-border/50 p-6 hover:shadow-lg transition-all duration-300 card-hover"
-              >
-                <div className="flex items-center mb-4">
+              <Card key={partner.sys.id} className="group hover:shadow-lg transition-all duration-300 border-border/50">
+                <CardHeader className="text-center">
                   {partner.fields.logo ? (
-                    <div className="w-40 h-24 bg-muted rounded-lg mr-4 flex items-center justify-center overflow-hidden">
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-xl overflow-hidden">
                       <img
                         src={getImageUrl(partner.fields.logo)}
                         alt={partner.fields.name}
-                        className="max-h-full max-w-full object-contain"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>
                   ) : (
-                    <div className="w-40 h-24 bg-muted rounded-lg mr-4 flex items-center justify-center">
-                      <Building className="h-12 w-12 text-muted-foreground" />
+                    <div className="flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                      <div className="h-10 w-10 text-white flex items-center justify-center">
+                        {getIconComponent(partner.fields.icon || 'building')}
+                      </div>
                     </div>
                   )}
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg text-foreground mb-1">
-                      {partner.fields.name}
-                    </h3>
-                    {partner.fields.category && (
-                      <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded-full">
-                        {partner.fields.category}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {partner.fields.description && (
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                  
+                  <CardTitle className="text-xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors duration-300">
+                    {partner.fields.name}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent>
+                  <CardDescription className="text-muted-foreground mb-6 leading-relaxed">
                     {partner.fields.description}
-                  </p>
-                )}
+                  </CardDescription>
 
-                <div className="flex items-center justify-between">
+                  {partner.fields.category && (
+                    <div className="mb-6">
+                      <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
+                        {partner.fields.category}
+                      </div>
+                    </div>
+                  )}
+
                   {partner.fields.website ? (
                     <a
                       href={partner.fields.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300 text-sm font-medium"
+                      className="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors duration-300 group/link"
                     >
-                      <Globe className="h-4 w-4 mr-1" />
                       Visitar Site
-                      <ExternalLink className="h-3 w-3 ml-1" />
+                      <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover/link:translate-x-1" />
                     </a>
                   ) : (
-                    <span className="text-muted-foreground text-sm">
+                    <span className="inline-flex items-center text-muted-foreground font-medium">
                       Parceiro Estratégico
                     </span>
                   )}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Partnership Benefits */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-section">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Benefícios das Parcerias</h2>
-            <p className="section-subtitle mx-auto">
-              Nossas parcerias estratégicas trazem vantagens exclusivas para nossos associados.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Networking</h3>
-              <p className="text-muted-foreground text-sm">
-                Conexões estratégicas com empresas líderes do setor.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Oportunidades</h3>
-              <p className="text-muted-foreground text-sm">
-                Acesso a projetos e negócios exclusivos.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ExternalLink className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Inovação</h3>
-              <p className="text-muted-foreground text-sm">
-                Tecnologias e soluções de ponta para seu negócio.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Crescimento</h3>
-              <p className="text-muted-foreground text-sm">
-                Suporte para expansão e desenvolvimento empresarial.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="section-padding">
-        <div className="container-section">
-          <div className="text-center">
-            <h2 className="section-title">
-              Quer Ser Nosso Parceiro?
-            </h2>
-            <p className="section-subtitle mb-8">
-              Entre em contato conosco e descubra como sua empresa pode se juntar 
-              à nossa rede de parcerias estratégicas.
-            </p>
-            <Link href="/contato" className="btn-primary">
-              Entre em Contato
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

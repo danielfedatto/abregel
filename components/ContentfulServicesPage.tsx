@@ -143,7 +143,7 @@ export default function ContentfulServicesPage() {
                     </div>
                   ) : (
                     <div className="flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <div className="h-10 w-10 text-white">
+                      <div className="h-10 w-10 text-white flex items-center justify-center">
                         {getIconComponent(service.fields.icon || 'building')}
                       </div>
                     </div>

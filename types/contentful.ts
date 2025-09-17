@@ -55,10 +55,12 @@ export interface Service extends ContentfulEntry {
 export interface Partner extends ContentfulEntry {
   fields: {
     name: string;
-    logo: ContentfulImage;
+    logo?: ContentfulImage;
     website?: string;
     description?: string;
     category?: string;
+    icon?: string;
+    benefits?: string[];
     order: number;
   };
 }
@@ -362,6 +364,18 @@ export interface AboutPage extends ContentfulEntry {
     ctaDescription: string;
     ctaText: string;
     ctaLink: string;
+    order: number;
+  };
+}
+
+// Tipo para Página de Parcerias
+export interface PartnershipsPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    heroTitle: string;
+    heroDescription: string;
+    sectionTitle: string;
+    sectionDescription: string;
     order: number;
   };
 }
