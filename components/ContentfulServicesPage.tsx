@@ -253,7 +253,7 @@ export default function ContentfulServicesPage() {
             <h2 className="section-title">
               Precisa de Mais Informações?
             </h2>
-            <p className="section-subtitle mb-8">
+            <p className="section-subtitle mb-8 mx-auto">
               Nossa equipe está pronta para esclarecer dúvidas e 
               apresentar como nossos serviços podem beneficiar sua empresa.
             </p>
