@@ -222,12 +222,12 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
             </div>
 
             {/* Conteúdo do post */}
-            <article className="prose prose-sm sm:prose-base md:prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline">
+            <article className="max-w-none">
               <div 
                 dangerouslySetInnerHTML={{ 
                   __html: extractRichText(post.fields.content) 
                 }} 
-                className="text-foreground leading-relaxed break-words overflow-wrap-anywhere"
+                className="rich-text-content text-foreground leading-relaxed break-words overflow-wrap-anywhere"
                 style={{
                   wordBreak: 'break-word',
                   overflowWrap: 'anywhere',

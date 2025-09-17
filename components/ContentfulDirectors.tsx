@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Building } from 'lucide-react';
 
 export default function ContentfulDirectors() {
-  const { data: directors, loading, error } = useContentful<Director>('director', {
+  const { data: directors, loading, error } = useContentful<Director>('1DQsMDPVZOjClyhnmExxrh', {
     limit: 12,
     order: ['fields.order'],
   });

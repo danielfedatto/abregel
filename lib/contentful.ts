@@ -110,19 +110,135 @@ export function formatContentfulDate(dateString: string): string {
   });
 }
 
-// Função para extrair texto rico do Contentful
+// Função para extrair texto rico do Contentful e converter para HTML
 export function extractRichText(richText: any): string {
   if (!richText || !richText.content) return '';
   
   return richText.content
-    .map((node: any) => {
-      if (node.nodeType === 'paragraph') {
-        return node.content
-          .map((content: any) => content.value || '')
-          .join(' ');
+    .map((node: any) => processNode(node))
+    .join('')
+    .trim();
+}
+
+// Função para processar cada nó do Rich Text
+function processNode(node: any): string {
+  if (!node) return '';
+  
+  switch (node.nodeType) {
+    case 'paragraph':
+      return `<p>${processContent(node.content)}</p>`;
+    
+    case 'heading-1':
+      return `<h1 class="text-3xl font-bold mb-4 mt-6">${processContent(node.content)}</h1>`;
+    
+    case 'heading-2':
+      return `<h2 class="text-2xl font-bold mb-3 mt-5">${processContent(node.content)}</h2>`;
+    
+    case 'heading-3':
+      return `<h3 class="text-xl font-semibold mb-2 mt-4">${processContent(node.content)}</h3>`;
+    
+    case 'heading-4':
+      return `<h4 class="text-lg font-semibold mb-2 mt-3">${processContent(node.content)}</h4>`;
+    
+    case 'heading-5':
+      return `<h5 class="text-base font-semibold mb-2 mt-3">${processContent(node.content)}</h5>`;
+    
+    case 'heading-6':
+      return `<h6 class="text-sm font-semibold mb-2 mt-3">${processContent(node.content)}</h6>`;
+    
+    case 'unordered-list':
+      return `<ul class="list-disc list-inside mb-4 space-y-1">${node.content.map((item: any) => processNode(item)).join('')}</ul>`;
+    
+    case 'ordered-list':
+      return `<ol class="list-decimal list-inside mb-4 space-y-1">${node.content.map((item: any) => processNode(item)).join('')}</ol>`;
+    
+    case 'list-item':
+      return `<li>${processContent(node.content)}</li>`;
+    
+    case 'blockquote':
+      return `<blockquote class="border-l-4 border-primary pl-4 py-2 my-4 italic bg-muted/50 rounded-r">${processContent(node.content)}</blockquote>`;
+    
+    case 'hr':
+      return `<hr class="my-6 border-border">`;
+    
+    case 'hyperlink':
+      const url = node.data?.uri || '#';
+      return `<a href="${url}" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">${processContent(node.content)}</a>`;
+    
+    case 'entry-hyperlink':
+      // Para links internos, você pode implementar lógica específica
+      return `<a href="#" class="text-primary hover:underline">${processContent(node.content)}</a>`;
+    
+    case 'asset-hyperlink':
+      // Para links de assets
+      const assetUrl = node.data?.target?.fields?.file?.url;
+      if (assetUrl) {
+        return `<a href="https:${assetUrl}" class="text-primary hover:underline" target="_blank" rel="noopener noreferrer">${processContent(node.content)}</a>`;
+      }
+      return processContent(node.content);
+    
+    case 'embedded-asset-block':
+      const asset = node.data?.target;
+      if (asset?.fields?.file?.contentType?.startsWith('image/')) {
+        const imageUrl = `https:${asset.fields.file.url}`;
+        const alt = asset.fields.title || asset.fields.description || '';
+        return `<figure class="my-6"><img src="${imageUrl}" alt="${alt}" class="w-full h-auto rounded-lg shadow-md" /><figcaption class="text-sm text-muted-foreground mt-2 text-center">${alt}</figcaption></figure>`;
       }
       return '';
+    
+    case 'embedded-entry-block':
+      // Para entradas embarcadas, você pode implementar lógica específica
+      return `<div class="my-4 p-4 border border-border rounded-lg bg-muted/30">${processContent(node.content)}</div>`;
+    
+    default:
+      // Para outros tipos de nó, tentar processar o conteúdo
+      if (node.content) {
+        return processContent(node.content);
+      }
+      return '';
+  }
+}
+
+// Função para processar o conteúdo de um nó (texto com formatação)
+function processContent(content: any[]): string {
+  if (!content || !Array.isArray(content)) return '';
+  
+  return content
+    .map((item: any) => {
+      if (item.nodeType === 'text') {
+        let text = item.value || '';
+        
+        // Aplicar formatação
+        if (item.marks) {
+          item.marks.forEach((mark: any) => {
+            switch (mark.type) {
+              case 'bold':
+                text = `<strong>${text}</strong>`;
+                break;
+              case 'italic':
+                text = `<em>${text}</em>`;
+                break;
+              case 'underline':
+                text = `<u>${text}</u>`;
+                break;
+              case 'code':
+                text = `<code class="bg-muted px-1 py-0.5 rounded text-sm font-mono">${text}</code>`;
+                break;
+              case 'superscript':
+                text = `<sup>${text}</sup>`;
+                break;
+              case 'subscript':
+                text = `<sub>${text}</sub>`;
+                break;
+            }
+          });
+        }
+        
+        return text;
+      }
+      
+      // Se não for texto, processar como nó
+      return processNode(item);
     })
-    .join('\n')
-    .trim();
+    .join('');
 }

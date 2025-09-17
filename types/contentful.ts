@@ -345,3 +345,23 @@ export interface ContactPage extends ContentfulEntry {
     order: number;
   };
 }
+
+// Tipo para Página Quem Somos
+export interface AboutPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    subtitle: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    heroDescription: string;
+    mission: string;
+    vision: string;
+    values: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaDescription: string;
+    ctaText: string;
+    ctaLink: string;
+    order: number;
+  };
+}
