@@ -393,3 +393,27 @@ export interface DynamicPage extends ContentfulEntry {
     order: number;
   };
 }
+
+// Tipo para Página FIESP
+export interface FiespPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    heroTitle: string;
+    heroDescription: string;
+    sectionTitle: string;
+    sectionDescription: string;
+    order: number;
+  };
+}
+
+// Tipo para Item FIESP
+export interface FiespItem extends ContentfulEntry {
+  fields: {
+    name: string;
+    description?: string;
+    icon: string;
+    category?: string;
+    website?: string;
+    order: number;
+  };
+}

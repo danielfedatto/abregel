@@ -10,7 +10,7 @@ import { getImageUrl } from '@/lib/contentful';
 const navigation = [
   { name: 'Quem Somos', href: '/quem-somos' },
   { name: 'Serviços', href: '/servicos' },
-  { name: 'Parceria FIESP', href: '/parcerias' },
+  { name: 'Parceria FIESP', href: '/parceria-fiesp' },
   { name: 'Notícias', href: '/noticias' },
   { name: 'Contato', href: '/contato' },
 ];
