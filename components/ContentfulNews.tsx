@@ -97,11 +97,18 @@ export default function ContentfulNews() {
             <article key={post.sys.id} className="group bg-card rounded-2xl overflow-hidden card-hover border border-border/50">
               <div className="aspect-video bg-muted relative overflow-hidden">
                 {post.fields.featuredImage ? (
+                  <Link 
+                    href={`/noticias/${post.fields.slug}`}
+                    className="block"
+                    title={`Ir para ${post.fields.title}`}
+                    aria-label={`Ir para ${post.fields.title}`}
+                  >
                   <img
                     src={getImageUrl(post.fields.featuredImage)}
                     alt={post.fields.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  </Link>
                 ) : (
                   <div className="absolute inset-0 bg-gradient-primary opacity-20" />
                 )}
@@ -120,9 +127,16 @@ export default function ContentfulNews() {
                   {post.fields.publishDate && formatContentfulDate(post.fields.publishDate)}
                 </div>
                 
-                <h3 className="text-xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                  {post.fields.title}
-                </h3>
+                <Link 
+                  href={`/noticias/${post.fields.slug}`}
+                  className="block"
+                  title={`Ir para ${post.fields.title}`}
+                  aria-label={`Ir para ${post.fields.title}`}
+                >
+                  <h3 className="text-xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    {post.fields.title}
+                  </h3>
+                </Link>
                 
                 <p className="text-muted-foreground mb-4 line-clamp-3 leading-relaxed">
                   {post.fields.excerpt}
