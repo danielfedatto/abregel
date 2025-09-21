@@ -114,7 +114,7 @@ export async function generateStaticParams() {
 export default async function DynamicPageComponent({ params }: DynamicPageProps) {
   const { slug } = await params;
   const page = await getDynamicPage(slug);
-
+  
   if (!page) {
     notFound();
   }
@@ -190,7 +190,7 @@ export default async function DynamicPageComponent({ params }: DynamicPageProps)
               dangerouslySetInnerHTML={{ 
                 __html: extractRichText(page.fields.content) 
               }} 
-              className="rich-text-content text-foreground leading-relaxed break-words overflow-wrap-anywhere"
+              className="rich-text-content text-foreground leading-relaxed break-words overflow-wrap-anywhere prose prose-lg max-w-none"
               style={{
                 wordBreak: 'break-word',
                 overflowWrap: 'anywhere',

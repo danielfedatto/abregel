@@ -112,12 +112,16 @@ export function formatContentfulDate(dateString: string): string {
 
 // Função para extrair texto rico do Contentful e converter para HTML
 export function extractRichText(richText: any): string {
-  if (!richText || !richText.content) return '';
+  if (!richText || !richText.content || !Array.isArray(richText.content)) return '';
   
-  return richText.content
+  const html = richText.content
     .map((node: any) => processNode(node))
+    .filter((html: string) => html.trim() !== '') // Remove nós vazios
     .join('')
     .trim();
+  
+  // Garantir que o HTML tenha pelo menos uma estrutura básica
+  return html || '';
 }
 
 // Função para processar cada nó do Rich Text
@@ -126,7 +130,9 @@ function processNode(node: any): string {
   
   switch (node.nodeType) {
     case 'paragraph':
-      return `<p>${processContent(node.content)}</p>`;
+      const paragraphContent = processContent(node.content);
+      // Só renderizar parágrafo se houver conteúdo
+      return paragraphContent.trim() ? `<p class="mb-4 leading-relaxed">${paragraphContent}</p>` : '';
     
     case 'heading-1':
       return `<h1 class="text-3xl font-bold mb-4 mt-6">${processContent(node.content)}</h1>`;
@@ -153,7 +159,7 @@ function processNode(node: any): string {
       return `<ol class="list-decimal list-inside mb-4 space-y-1">${node.content.map((item: any) => processNode(item)).join('')}</ol>`;
     
     case 'list-item':
-      return `<li>${processContent(node.content)}</li>`;
+      return `<li class="leading-relaxed">${processContent(node.content)}</li>`;
     
     case 'blockquote':
       return `<blockquote class="border-l-4 border-primary pl-4 py-2 my-4 italic bg-muted/50 rounded-r">${processContent(node.content)}</blockquote>`;
@@ -208,8 +214,11 @@ function processContent(content: any[]): string {
       if (item.nodeType === 'text') {
         let text = item.value || '';
         
+        // Se o texto estiver vazio, retornar string vazia
+        if (!text.trim()) return '';
+        
         // Aplicar formatação
-        if (item.marks) {
+        if (item.marks && Array.isArray(item.marks)) {
           item.marks.forEach((mark: any) => {
             switch (mark.type) {
               case 'bold':
@@ -240,5 +249,6 @@ function processContent(content: any[]): string {
       // Se não for texto, processar como nó
       return processNode(item);
     })
+    .filter((html: string) => html.trim() !== '') // Remove conteúdo vazio
     .join('');
 }
