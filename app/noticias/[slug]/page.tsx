@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { NewsPost } from '@/types/contentful';
-import { extractRichText, getImageUrl } from '@/lib/contentful';
+import { getImageUrl } from '@/lib/contentful';
+import ExtractRichText from '@/components/ExtractRichText';
 import { Calendar, User, Tag, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -222,18 +223,8 @@ export default async function NewsPostPage({ params }: NewsPostPageProps) {
             </div>
 
             {/* Conteúdo do post */}
-            <article className="max-w-none">
-              <div 
-                dangerouslySetInnerHTML={{ 
-                  __html: extractRichText(post.fields.content) 
-                }} 
-                className="rich-text-content text-foreground leading-relaxed break-words overflow-wrap-anywhere"
-                style={{
-                  wordBreak: 'break-word',
-                  overflowWrap: 'anywhere',
-                  hyphens: 'auto'
-                }}
-              />
+            <article className="max-w-none rich-text-content text-foreground leading-relaxed break-words overflow-wrap-anywhere">
+              <ExtractRichText richText={post.fields.content as any} />
             </article>
 
             {/* Tags */}
