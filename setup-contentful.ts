@@ -165,6 +165,8 @@ const contentTypes = [
         name: 'Benefícios',
         type: 'Array',
         required: false,
+        localized: false,
+        validations: [],
         items: {
           type: 'Object',
           validations: [],
@@ -976,10 +978,9 @@ async function createContentTypes() {
           // Content type não existe, continuar com a criação
         }
         const created = await environment.createContentTypeWithId(contentTypeDef.id, {
-          sys: { id: contentTypeDef.id },
           name: contentTypeDef.name,
           description: contentTypeDef.description,
-          fields: contentTypeDef.fields,
+          fields: contentTypeDef.fields as any,
         });
         const published = await created.publish();
         console.log(`✅ Content Type "${contentTypeDef.name}" criado e publicado com sucesso!`);
