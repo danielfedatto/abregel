@@ -149,6 +149,35 @@ const contentTypes = [
     ],
   },
   {
+    id: 'servicesPage',
+    name: 'Página de Serviços',
+    description: 'Conteúdos editáveis da página /servicos',
+    fields: [
+      { id: 'title', name: 'Título', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 120 } }] },
+      { id: 'heroTitle', name: 'Título do Hero', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 150 } }] },
+      { id: 'heroSubtitle', name: 'Subtítulo do Hero', type: 'Text', required: true, localized: false, validations: [{ size: { max: 300 } }] },
+      { id: 'servicesSectionTitle', name: 'Título da Seção de Serviços', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 150 } }] },
+      { id: 'servicesSectionSubtitle', name: 'Subtítulo da Seção de Serviços', type: 'Text', required: true, localized: false, validations: [{ size: { max: 300 } }] },
+      { id: 'benefitsTitle', name: 'Título Benefícios', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 150 } }] },
+      { id: 'benefitsSubtitle', name: 'Subtítulo Benefícios', type: 'Text', required: true, localized: false, validations: [{ size: { max: 300 } }] },
+      {
+        id: 'benefits',
+        name: 'Benefícios',
+        type: 'Array',
+        required: false,
+        items: {
+          type: 'Object',
+          validations: [],
+        },
+      },
+      { id: 'ctaTitle', name: 'Título CTA', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 150 } }] },
+      { id: 'ctaSubtitle', name: 'Subtítulo CTA', type: 'Text', required: true, localized: false, validations: [{ size: { max: 300 } }] },
+      { id: 'ctaButtonText', name: 'Texto Botão CTA', type: 'Symbol', required: true, localized: false, validations: [{ size: { max: 50 } }] },
+      { id: 'ctaButtonLink', name: 'Link Botão CTA', type: 'Symbol', required: true, localized: false, validations: [{ regexp: { pattern: '^(?:/|https?://).*', flags: '' } }] },
+      { id: 'order', name: 'Ordem', type: 'Integer', required: true, localized: false, validations: [{ range: { min: 1 } }] },
+    ],
+  },
+  {
     id: 'service',
     name: 'Serviço',
     description: 'Serviços oferecidos pelo sindicato',
@@ -946,9 +975,13 @@ async function createContentTypes() {
         } catch {
           // Content type não existe, continuar com a criação
         }
-        
-        
-        
+        const created = await environment.createContentTypeWithId(contentTypeDef.id, {
+          sys: { id: contentTypeDef.id },
+          name: contentTypeDef.name,
+          description: contentTypeDef.description,
+          fields: contentTypeDef.fields,
+        });
+        const published = await created.publish();
         console.log(`✅ Content Type "${contentTypeDef.name}" criado e publicado com sucesso!`);
       } catch (error) {
         console.error(`❌ Erro ao criar Content Type "${contentTypeDef.name}":`, error);
@@ -968,10 +1001,54 @@ async function createContentTypes() {
   }
 }
 
+// Criar conteúdo de exemplo para Página de Serviços
+async function seedServicesPageExample() {
+  try {
+    console.log('\n🌱 Inserindo conteúdo de exemplo para Página de Serviços...');
+    const space = await client.getSpace(SPACE_ID);
+    const environment = await space.getEnvironment(ENVIRONMENT_ID);
+
+    // Obter locale padrão do espaço
+    const locales = await environment.getLocales();
+    const defaultLocale = locales.items.find((l: any) => l.default) || locales.items[0];
+    const locale = defaultLocale?.code || 'en-US';
+
+    // Verificar se já existe uma entry
+    const existing = await environment.getEntries({ content_type: 'servicesPage', limit: 1 });
+    if (existing.items.length > 0) {
+      console.log('⚠️  Já existe uma Página de Serviços. Pulando seed.');
+      return;
+    }
+
+    const entry = await environment.createEntry('servicesPage', {
+      fields: {
+        title: { [locale]: 'Serviços' },
+        heroTitle: { [locale]: 'Nossos Serviços' },
+        heroSubtitle: { [locale]: 'Oferecemos uma gama completa de serviços especializados para impulsionar o crescimento e competitividade das empresas do setor.' },
+        servicesSectionTitle: { [locale]: 'Conheça Nossos Serviços' },
+        servicesSectionSubtitle: { [locale]: 'Soluções especializadas para atender às necessidades específicas do setor industrial e promover o desenvolvimento empresarial.' },
+        benefitsTitle: { [locale]: 'Por que Escolher Nossos Serviços?' },
+        benefitsSubtitle: { [locale]: 'Vantagens exclusivas para nossos associados e parceiros.' },
+        ctaTitle: { [locale]: 'Precisa de Mais Informações?' },
+        ctaSubtitle: { [locale]: 'Nossa equipe está pronta para esclarecer dúvidas e apresentar como nossos serviços podem beneficiar sua empresa.' },
+        ctaButtonText: { [locale]: 'Entre em Contato' },
+        ctaButtonLink: { [locale]: '/contato' },
+        order: { [locale]: 1 },
+      },
+    });
+
+    await entry.publish();
+    console.log('✅ Conteúdo de exemplo publicado para Página de Serviços.');
+  } catch (error) {
+    console.error('❌ Erro ao inserir conteúdo de exemplo para Página de Serviços:', error);
+  }
+}
+
 // Executar o script
 async function main() {
   await updateHeroSlideContentType();
   await createContentTypes();
+  await seedServicesPageExample();
 }
 
 main();

@@ -1,7 +1,7 @@
 'use client';
 
 import { useContentful } from '@/hooks/use-contentful';
-import { Service } from '@/types/contentful';
+import { Service, ServicesPage } from '@/types/contentful';
 import { getImageUrl } from '@/lib/contentful';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -23,10 +23,12 @@ import {
 } from 'lucide-react';
 
 export default function ContentfulServicesPage() {
-  const { data: services, loading, error } = useContentful<Service>('service', {
+  const { data: services, loading: loadingServices, error: errorServices } = useContentful<Service>('service', {
     limit: 20,
     order: ['fields.order'],
   });
+  const { data: servicesPages, loading: loadingPage, error: errorPage } = useContentful<ServicesPage>('servicesPage', { limit: 1 });
+  const page = servicesPages?.[0];
 
   // Função para mapear nomes de ícones para componentes
   const getIconComponent = (iconName: string) => {
@@ -49,6 +51,7 @@ export default function ContentfulServicesPage() {
     return <IconComponent className="w-8 h-8" />;
   };
 
+  const loading = loadingServices || loadingPage;
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -82,6 +85,7 @@ export default function ContentfulServicesPage() {
     );
   }
 
+  const error = errorServices || errorPage;
   if (error || !services || services.length === 0) {
     return (
       <div className="min-h-screen">
@@ -107,13 +111,12 @@ export default function ContentfulServicesPage() {
       <section className="pt-32 pb-16 bg-gradient-primary text-white">
         <div className="container-section">
           <div className="text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Nossos Serviços
-            </h1>
-            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              Oferecemos uma gama completa de serviços especializados para 
-              impulsionar o crescimento e competitividade das empresas do setor.
-            </p>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+                {page?.fields.heroTitle || 'Nossos Serviços'}
+              </h1>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                {page?.fields.heroSubtitle || 'Oferecemos uma gama completa de serviços especializados para impulsionar o crescimento e competitividade das empresas do setor.'}
+              </p>
           </div>
         </div>
       </section>
@@ -122,10 +125,9 @@ export default function ContentfulServicesPage() {
       <section className="section-padding">
         <div className="container-section">
           <div className="text-center mb-12">
-            <h2 className="section-title">Conheça Nossos Serviços</h2>
+            <h2 className="section-title">{page?.fields.servicesSectionTitle || 'Conheça Nossos Serviços'}</h2>
             <p className="section-subtitle mx-auto">
-              Soluções especializadas para atender às necessidades específicas 
-              do setor industrial e promover o desenvolvimento empresarial.
+              {page?.fields.servicesSectionSubtitle || 'Soluções especializadas para atender às necessidades específicas do setor industrial e promover o desenvolvimento empresarial.'}
             </p>
           </div>
 
@@ -196,52 +198,27 @@ export default function ContentfulServicesPage() {
       <section className="section-padding bg-muted/30">
         <div className="container-section">
           <div className="text-center mb-12">
-            <h2 className="section-title">Por que Escolher Nossos Serviços?</h2>
+            <h2 className="section-title">{page?.fields.benefitsTitle || 'Por que Escolher Nossos Serviços?'}</h2>
             <p className="section-subtitle mx-auto">
-              Vantagens exclusivas para nossos associados e parceiros.
+              {page?.fields.benefitsSubtitle || 'Vantagens exclusivas para nossos associados e parceiros.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="h-8 w-8 text-primary" />
+            {(page?.fields.benefits || [
+              { icon: 'award', title: 'Experiência', description: 'Mais de 35 anos de experiência no setor industrial.' },
+              { icon: 'users', title: 'Rede de Contatos', description: 'Acesso a uma ampla rede de profissionais e empresas.' },
+              { icon: 'shield', title: 'Confiabilidade', description: 'Serviços confiáveis e resultados comprovados.' },
+              { icon: 'heart', title: 'Suporte', description: 'Acompanhamento personalizado e suporte contínuo.' },
+            ]).map((benefit, idx) => (
+              <div key={idx} className="text-center">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  {getIconComponent(benefit.icon)}
+                </div>
+                <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>
+                <p className="text-muted-foreground text-sm">{benefit.description}</p>
               </div>
-              <h3 className="font-semibold text-lg mb-2">Experiência</h3>
-              <p className="text-muted-foreground text-sm">
-                Mais de 35 anos de experiência no setor industrial.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Rede de Contatos</h3>
-              <p className="text-muted-foreground text-sm">
-                Acesso a uma ampla rede de profissionais e empresas.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Confiabilidade</h3>
-              <p className="text-muted-foreground text-sm">
-                Serviços confiáveis e resultados comprovados.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Suporte</h3>
-              <p className="text-muted-foreground text-sm">
-                Acompanhamento personalizado e suporte contínuo.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -251,14 +228,13 @@ export default function ContentfulServicesPage() {
         <div className="container-section">
           <div className="text-center">
             <h2 className="section-title">
-              Precisa de Mais Informações?
+              {page?.fields.ctaTitle || 'Precisa de Mais Informações?'}
             </h2>
             <p className="section-subtitle mb-8 mx-auto">
-              Nossa equipe está pronta para esclarecer dúvidas e 
-              apresentar como nossos serviços podem beneficiar sua empresa.
+              {page?.fields.ctaSubtitle || 'Nossa equipe está pronta para esclarecer dúvidas e apresentar como nossos serviços podem beneficiar sua empresa.'}
             </p>
-            <Link href="/contato" className="btn-primary">
-              Entre em Contato
+            <Link href={page?.fields.ctaButtonLink || '/contato'} className="btn-primary">
+              {page?.fields.ctaButtonText || 'Entre em Contato'}
             </Link>
           </div>
         </div>

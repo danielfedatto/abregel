@@ -380,6 +380,25 @@ export interface PartnershipsPage extends ContentfulEntry {
   };
 }
 
+// Tipo para Página de Serviços
+export interface ServicesPage extends ContentfulEntry {
+  fields: {
+    title: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    servicesSectionTitle: string;
+    servicesSectionSubtitle: string;
+    benefitsTitle: string;
+    benefitsSubtitle: string;
+    benefits: any[]; // Array de objetos simples ou links para entries servicesBenefit
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaButtonText: string;
+    ctaButtonLink: string;
+    order: number;
+  };
+}
+
 // Tipo para Página Dinâmica
 export interface DynamicPage extends ContentfulEntry {
   fields: {
