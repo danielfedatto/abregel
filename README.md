@@ -279,11 +279,6 @@ npx tsx setup-contentful.ts # Setup manual
 2. **Conteúdo não aparece**: Verifique se está publicado no Contentful
 3. **Imagens não carregam**: Verifique as configurações de domínio
 
-### **Contato Técnico**
-- **Desenvolvedor**: [Seu Nome]
-- **Email**: [seu-email@exemplo.com]
-- **GitHub**: [seu-usuario]
-
 ---
 
 ## 📄 **Licença**
