@@ -283,7 +283,7 @@ npx tsx setup-contentful.ts # Setup manual
 
 ## 📄 **Licença**
 
-Este projeto foi desenvolvido exclusivamente para o Sindicato Industrial. Todos os direitos reservados.
+Este projeto foi desenvolvido exclusivamente para o Abregel. Todos os direitos reservados.
 
 ---
 
